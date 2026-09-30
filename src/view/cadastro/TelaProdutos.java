@@ -23,9 +23,10 @@ public class TelaProdutos extends JPanel {
 
     private final JTextField codigo = new JTextField(10);
     private final JTextField nome = new JTextField(25);
-    private final JTextField categoria = new JTextField(20);
+    private final JComboBox<String> categoria = new JComboBox<>();
     private final JTextField descricao = new JTextField(30);
-    private final JTextField modelo = new JTextField(20);
+    private final JTextField unidadeMedida = new JTextField(10);
+    private final JTextField quantidade = new JTextField(10);
     private final JTextField peso = new JTextField(10);
     private final JTextField preco = new JTextField(10);
     private final JTextField estoqueMinimo = new JTextField(10);
@@ -41,9 +42,9 @@ public class TelaProdutos extends JPanel {
                     "Código",
                     "Nome",
                     "Categoria",
-                    "Modelo",
+                    "Unidade de medida",
                     "Preço",
-                    "Estoque",
+                    "Quantidade",
                     "Status"
             },
             0
@@ -89,14 +90,15 @@ public class TelaProdutos extends JPanel {
 
         campo(formulario, g, 0, "Código:", codigo);
         campo(formulario, g, 1, "Nome*:", nome);
-        campo(formulario, g, 2, "Categoria*:", categoria);
+        componente(formulario, g, 2, "Categoria*:", categoria);
         campo(formulario, g, 3, "Descrição:", descricao);
-        campo(formulario, g, 4, "Modelo:", modelo);
-        campo(formulario, g, 5, "Peso:", peso);
-        campo(formulario, g, 6, "Preço*:", preco);
-        campo(formulario, g, 7, "Estoque mínimo:", estoqueMinimo);
-        campo(formulario, g, 8, "Estoque máximo:", estoqueMaximo);
-        componente(formulario, g, 9, "Status:", status);
+        campo(formulario, g, 4, "Unidade de medida:", unidadeMedida);
+        campo(formulario, g, 5, "Quantidade:", quantidade);
+        campo(formulario, g, 6, "Peso:", peso);
+        campo(formulario, g, 7, "Preço*:", preco);
+        campo(formulario, g, 8, "Estoque mínimo:", estoqueMinimo);
+        campo(formulario, g, 9, "Estoque máximo:", estoqueMaximo);
+        componente(formulario, g, 10, "Status:", status);
 
         JPanel botoes = new JPanel(
                 new FlowLayout(FlowLayout.LEFT)
@@ -171,9 +173,12 @@ public class TelaProdutos extends JPanel {
 
         codigo.setText("");
         nome.setText("");
-        categoria.setText("");
+        if (categoria.getItemCount() > 0) {
+            categoria.setSelectedIndex(0);
+        }
         descricao.setText("");
-        modelo.setText("");
+        unidadeMedida.setText("");
+        quantidade.setText("");
         peso.setText("");
         preco.setText("");
         estoqueMinimo.setText("");
@@ -194,7 +199,7 @@ public class TelaProdutos extends JPanel {
         return nome;
     }
 
-    public JTextField getCategoria() {
+    public JComboBox<String> getCategoria() {
         return categoria;
     }
 
@@ -202,8 +207,12 @@ public class TelaProdutos extends JPanel {
         return descricao;
     }
 
-    public JTextField getModelo() {
-        return modelo;
+    public JTextField getUnidadeMedida() {
+        return unidadeMedida;
+    }
+
+    public JTextField getQuantidade() {
+        return quantidade;
     }
 
     public JTextField getPeso() {

@@ -24,6 +24,7 @@ public class TelaKits extends JPanel {
 
     private final JTextField codigo = new JTextField(10);
     private final JTextField nome = new JTextField(25);
+    private final JTextField quantidadeKits = new JTextField(10);
     private final JTextField quantidade = new JTextField(10);
     private final JTextField pesquisa = new JTextField(24);
 
@@ -34,13 +35,15 @@ public class TelaKits extends JPanel {
             }
     );
 
-    private final JComboBox<String> produto = new JComboBox<>();
+    private final JTextField produto = new JTextField(20);
+    private final JTextField nomeProduto = new JTextField(25);
 
     private final DefaultTableModel modeloComponentes =
             new DefaultTableModel(
                     new Object[] {
+                            "Código / SKU",
                             "Produto",
-                            "Quantidade"
+                            "Quantidade por kit"
                     },
                     0
             ) {
@@ -65,6 +68,7 @@ public class TelaKits extends JPanel {
                             "Código",
                             "Nome do Kit",
                             "Tipo",
+                            "Quantidade de kits",
                             "Componentes"
                     },
                     0
@@ -131,6 +135,8 @@ public class TelaKits extends JPanel {
 
     private void montar() {
 
+        nomeProduto.setEditable(false);
+
         JPanel topo =
                 new JPanel(
                         new BorderLayout(
@@ -146,7 +152,7 @@ public class TelaKits extends JPanel {
 
         formulario.setBorder(
                 BorderFactory.createTitledBorder(
-                        "Cadastro de kits - produtos componentes"
+                        "Cadastro de kits"
                 )
         );
 
@@ -191,19 +197,35 @@ public class TelaKits extends JPanel {
                 tipo
         );
 
-        componente(
+        campo(
                 formulario,
                 g,
                 3,
-                "Produto:",
-                produto
+                "Quantidade de kits:",
+                quantidadeKits
         );
 
         campo(
                 formulario,
                 g,
                 4,
-                "Quantidade:",
+                "Código do produto / SKU:",
+                produto
+        );
+
+        campo(
+                formulario,
+                g,
+                5,
+                "Nome do produto:",
+                nomeProduto
+        );
+
+        campo(
+                formulario,
+                g,
+                6,
+                "Quantidade do produto por kit:",
                 quantidade
         );
 
@@ -222,7 +244,7 @@ public class TelaKits extends JPanel {
         componente(
                 formulario,
                 g,
-                5,
+                7,
                 "Componentes:",
                 botoesComponentes
         );
@@ -275,7 +297,7 @@ public class TelaKits extends JPanel {
         scrollComponentes.setPreferredSize(
                 new Dimension(
                         0,
-                        140
+                        120
                 )
         );
 
@@ -413,15 +435,14 @@ public class TelaKits extends JPanel {
 
         codigo.setText("");
         nome.setText("");
+        quantidadeKits.setText("");
         quantidade.setText("");
         pesquisa.setText("");
+        produto.setText("");
+        nomeProduto.setText("");
 
         if (tipo.getItemCount() > 0) {
             tipo.setSelectedIndex(0);
-        }
-
-        if (produto.getItemCount() > 0) {
-            produto.setSelectedIndex(0);
         }
 
         tabelaComponentes.clearSelection();
@@ -440,16 +461,24 @@ public class TelaKits extends JPanel {
         return quantidade;
     }
 
-    public JTextField getPesquisa() {
-        return pesquisa;
+    public JTextField getQuantidadeKits() {
+        return quantidadeKits;
     }
 
     public JComboBox<String> getTipo() {
         return tipo;
     }
 
-    public JComboBox<String> getProduto() {
+    public JTextField getPesquisa() {
+        return pesquisa;
+    }
+
+    public JTextField getProduto() {
         return produto;
+    }
+
+    public JTextField getNomeProduto() {
+        return nomeProduto;
     }
 
     public JTable getTabelaComponentes() {

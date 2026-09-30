@@ -8,7 +8,6 @@ import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,9 +20,11 @@ public class TelaVariacoes extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private final JComboBox<String> produto = new JComboBox<>();
+    private final JTextField produto = new JTextField(20);
+    private final JTextField nomeProduto = new JTextField(25);
 
     private final JTextField sku = new JTextField(20);
+    private final JTextField nomeVariacao = new JTextField(25);
     private final JTextField tamanho = new JTextField(10);
     private final JTextField cor = new JTextField(15);
     private final JTextField modelo = new JTextField(15);
@@ -33,8 +34,10 @@ public class TelaVariacoes extends JPanel {
 
     private final DefaultTableModel modeloTabela = new DefaultTableModel(
             new Object[] {
+                    "Código do produto",
                     "Produto",
                     "SKU",
+                    "Nome da variação",
                     "Tamanho",
                     "Cor",
                     "Modelo",
@@ -69,6 +72,8 @@ public class TelaVariacoes extends JPanel {
 
     private void montar() {
 
+        nomeProduto.setEditable(false);
+
         JPanel formulario = new JPanel(new GridBagLayout());
 
         formulario.setBorder(
@@ -82,13 +87,15 @@ public class TelaVariacoes extends JPanel {
         g.insets = new Insets(3, 4, 3, 4);
         g.anchor = GridBagConstraints.WEST;
 
-        componente(formulario, g, 0, "Produto*:", produto);
-        campo(formulario, g, 1, "SKU*:", sku);
-        campo(formulario, g, 2, "Tamanho:", tamanho);
-        campo(formulario, g, 3, "Cor:", cor);
-        campo(formulario, g, 4, "Modelo:", modelo);
-        campo(formulario, g, 5, "Quantidade:", quantidade);
-        campo(formulario, g, 6, "Preço:", preco);
+        campo(formulario, g, 0, "Código do produto*:", produto);
+        campo(formulario, g, 1, "Nome do produto:", nomeProduto);
+        campo(formulario, g, 2, "SKU*:", sku);
+        campo(formulario, g, 3, "Nome do produto variado*:", nomeVariacao);
+        campo(formulario, g, 4, "Tamanho:", tamanho);
+        campo(formulario, g, 5, "Cor:", cor);
+        campo(formulario, g, 6, "Modelo:", modelo);
+        campo(formulario, g, 7, "Quantidade:", quantidade);
+        campo(formulario, g, 8, "Preço:", preco);
 
         JPanel botoes = new JPanel(
                 new FlowLayout(FlowLayout.LEFT)
@@ -162,25 +169,33 @@ public class TelaVariacoes extends JPanel {
     public void limpar() {
 
         sku.setText("");
+        nomeVariacao.setText("");
         tamanho.setText("");
         cor.setText("");
         modelo.setText("");
         quantidade.setText("");
         preco.setText("");
 
-        if (produto.getItemCount() > 0) {
-            produto.setSelectedIndex(0);
-        }
+        produto.setText("");
+        nomeProduto.setText("");
 
         tabela.clearSelection();
     }
 
-    public JComboBox<String> getProduto() {
+    public JTextField getProduto() {
         return produto;
+    }
+
+    public JTextField getNomeProduto() {
+        return nomeProduto;
     }
 
     public JTextField getSku() {
         return sku;
+    }
+
+    public JTextField getNomeVariacao() {
+        return nomeVariacao;
     }
 
     public JTextField getTamanho() {
