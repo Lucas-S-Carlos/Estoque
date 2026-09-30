@@ -1,67 +1,112 @@
 package view.automacao;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaAlertaReposicao extends JPanel {
 
     private static final long serialVersionUID = 1L;
-	private DefaultTableModel modelo;
+
+    private final Color COR_FUNDO = new Color(245, 247, 250);
+    private final Color COR_BOTAO = new Color(52, 152, 219);
+
+    private JTextField campoProduto;
+    private JComboBox<String> comboUrgencia;
+    private JTable tabelaAlertas;
+    private DefaultTableModel modeloTabela;
+
+    private JButton btnFiltrar;
+    private JButton btnGerarOrdem;
+
     public TelaAlertaReposicao() {
+        criarTela();
+    }
 
-        setSize(750, 450);
+    private void criarTela() {
+        setLayout(new BorderLayout(15, 15));
+        setBorder(new EmptyBorder(20, 20, 20, 20));
+        setBackground(COR_FUNDO);
 
-        JLabel titulo = new JLabel(
-                "PRODUTOS QUE NECESSITAM DE REPOSIÇÃO",
-                SwingConstants.CENTER);
-        titulo.setBorder( BorderFactory.createEmptyBorder(10, 0, 25, 0));
-        titulo.setFont(new Font("Arial", Font.BOLD, 18));
-        
+        JPanel filtros = new JPanel(new GridBagLayout());
+        filtros.setBackground(Color.WHITE);
+        filtros.setBorder(BorderFactory.createTitledBorder("Filtros de Alertas de Reposição"));
 
-        String[] colunas = {
-                "Produto", "Estoque Atual", "Estoque Mínimo",
-                "Estoque Máximo", "Reposição", "Status"
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 10, 8, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        campoProduto = new JTextField(20);
+        adicionarCampo(filtros, gbc, 0, 0, "Produto / SKU:", campoProduto);
+
+        comboUrgencia = new JComboBox<>(new String[]{"Todas", "Crítica (Abaixo do Mínimo)", "Atenção (Próximo ao Mínimo)"});
+        adicionarCampo(filtros, gbc, 0, 2, "Nível de Urgência:", comboUrgencia);
+
+        btnFiltrar = new JButton("Filtrar Alertas");
+        gbc.gridx = 3;
+        gbc.gridy = 1;
+        gbc.weightx = 0;
+        filtros.add(btnFiltrar, gbc);
+
+        String[] colunas = {"Código/SKU", "Produto", "Estoque Atual", "Estoque Mínimo", "Sugestão Reposição", "Urgência"};
+        modeloTabela = new DefaultTableModel(new Object[][]{
+            {"ESC001", "Caderno", 5, 20, 30, "Crítica"},
+            {"ESC003", "Lápis", 12, 15, 25, "Atenção"}
+        }, colunas) {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
         };
 
-        modelo = new DefaultTableModel(colunas, 0);
-        JTable tabela = new JTable(modelo);
+        tabelaAlertas = new JTable(modeloTabela);
+        tabelaAlertas.setRowHeight(28);
 
-        JButton btnVerificar = new JButton("Verificar Estoque");
-        btnVerificar.addActionListener(e -> carregarAlertas());
+        JPanel painelTabela = new JPanel(new BorderLayout());
+        painelTabela.setBackground(Color.WHITE);
+        painelTabela.setBorder(BorderFactory.createTitledBorder("Produtos Com Necessidade de Reposição"));
+        painelTabela.add(new JScrollPane(tabelaAlertas), BorderLayout.CENTER);
 
-        add(titulo, BorderLayout.NORTH);
-        add(new JScrollPane(tabela), BorderLayout.CENTER);
+        JPanel painelAcoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        painelAcoes.setBackground(COR_FUNDO);
 
-        JPanel inferior = new JPanel();
-        inferior.add(btnVerificar);
-        add(inferior, BorderLayout.SOUTH);
+        btnGerarOrdem = new JButton("Gerar Ordem de Compra");
+        btnGerarOrdem.setBackground(COR_BOTAO);
+        btnGerarOrdem.setForeground(Color.WHITE);
 
-        carregarAlertas();
-        setVisible(true);
+        painelAcoes.add(btnGerarOrdem);
+
+        add(filtros, BorderLayout.NORTH);
+        add(painelTabela, BorderLayout.CENTER);
+        add(painelAcoes, BorderLayout.SOUTH);
+
+        btnFiltrar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Filtros aplicados ao relatório de alertas."));
+        btnGerarOrdem.addActionListener(e -> gerarOrdemCompra());
     }
 
-    private void carregarAlertas() {
-        modelo.setRowCount(0);
+    private void adicionarCampo(JPanel painel, GridBagConstraints gbc, int linha, int coluna, String texto, JComponent componente) {
+        gbc.gridx = coluna;
+        gbc.gridy = linha;
+        gbc.weightx = 0;
+        painel.add(new JLabel(texto), gbc);
 
-        adicionarProduto("Arroz", 5, 10, 50);
-        adicionarProduto("Calabresa", 18, 10, 40);
-        adicionarProduto("Coca-Cola", 3, 5, 50);
-        adicionarProduto("Ovo", 7, 8, 50);
+        gbc.gridx = coluna + 1;
+        gbc.weightx = 1;
+        painel.add(componente, gbc);
     }
 
-    private void adicionarProduto(String produto, int atual,
-                                   int minimo, int maximo) {
-        if (atual < minimo) {
-            int reposicao = maximo - atual;
-
-            modelo.addRow(new Object[]{
-                    produto,
-                    atual,
-                    minimo,
-                    maximo,
-                    reposicao,
-                    "REPOR ESTOQUE"
-            });
+    private void gerarOrdemCompra() {
+        int linhaSelecionada = tabelaAlertas.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um produto na tabela para gerar a ordem de compra.", "Atenção", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        String produto = (String) tabelaAlertas.getValueAt(linhaSelecionada, 1);
+        Object sugestao = tabelaAlertas.getValueAt(linhaSelecionada, 4);
+
+        JOptionPane.showMessageDialog(this, "Ordem de Compra gerada com sucesso para o produto: " + produto + "\nQuantidade Solicitada: " + sugestao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 }
