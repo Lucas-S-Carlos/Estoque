@@ -86,7 +86,7 @@ public class TelaMRP extends JPanel {
         
         // preenche com os dados fictícios para ilustrar
         preencherDadosExemplo();
-        preencherDetalhesExemplo();
+        limpar();
     }
 
     
@@ -294,13 +294,13 @@ public class TelaMRP extends JPanel {
 
     
     // preenche os campos de detalhes com dados fictícios
-    private void preencherDetalhesExemplo() {
-        quantidadeSugerida.setText("Comprar 7 unidades");
-        dataPrevista.setText("25/08/2026");
-        responsavel.setText("Almoxarifado");
+    private void limpar() {
+        quantidadeSugerida.setText("");
+        dataPrevista.setText("");
+        responsavel.setText("");
 
         justificativa.setText(
-            "O estoque atual está abaixo do estoque mínimo definido para o item."
+            ""
         );
     }
 
@@ -344,4 +344,39 @@ public class TelaMRP extends JPanel {
 
         p.add(t, g);
     }
+    
+    
+    /* Feito pelo Lucas S. Carlos */
+    
+    public JTextField getTxtProduto() {
+        return produto;
+    }
+    
+    public JComboBox<String> getCmbCategoria() {
+        return categoria;
+    }
+
+    public JComboBox<String> getCmbStatus() {
+        return status;
+    }
+    
+    public JTextField getTxtQuantidadeSugerida() {
+        return quantidadeSugerida;
+    }
+
+    public JTextField getTxtDataPrevista() {
+        return dataPrevista;
+    }
+
+    public JTextField getTxtResponsavel() {
+        return responsavel;
+    }
+
+    public JTextArea getTxtJustificativa() {
+        return justificativa;
+    }
+    
+    /* Feito pelo Lucas S. Carlos */
+    
+    
 }

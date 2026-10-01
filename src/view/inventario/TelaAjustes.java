@@ -93,4 +93,52 @@ public class TelaAjustes extends JPanel {
 		painelCampo.add(campo, BorderLayout.CENTER);
 		return painelCampo;
 	}
+	
+	
+	
+	
+	public JComboBox<String> getCmbOutrasAcoes() {
+	    return comboOutrasAcoes;
+	}
+
+	public JTextField getTxtItem() {
+	    return txtItem;
+	}
+
+	public JTextField getTxtDescricao() {
+	    return txtDescricao;
+	}
+
+	public JTextField getTxtQuantidade() {
+	    return txtQuantidade;
+	}
+
+	public JTextField getTxtCustoUnitario() {
+	    return txtCustoUnitario;
+	}
+
+	public JTextField getTxtCustoTotal() {
+	    return txtCustoTotal;
+	}
+
+	public JTextField getTxtLote() {
+	    return txtLote;
+	}
+
+	public JComboBox<String> getCmbStatus() {
+	    return comboStatus;
+	}
+
+	public JTextField getTxtDataValidade() {
+	    return txtDataValidade;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

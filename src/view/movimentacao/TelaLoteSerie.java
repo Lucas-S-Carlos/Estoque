@@ -365,4 +365,40 @@ public class TelaLoteSerie extends JPanel {
 	            JOptionPane.INFORMATION_MESSAGE
 	    );
 	}
+	
+
+	
+	public JTextField getTxtCampoProduto() {
+	    return campoProduto;
+	}
+
+	public JComboBox<String> getCmbCampoTipo() {
+	    return campoTipo;
+	}
+
+	public JTextField getTxtCampoLote() {
+	    return campoLote;
+	}
+
+	public JTextField getTxtCampoSerie() {
+	    return campoSerie;
+	}
+
+	public JTextField getTxtCampoFabricacao() {
+	    return campoFabricacao;
+	}
+
+	public JTextField getTxtCampoValidade() {
+	    return campoValidade;
+	}
+
+	public JTextField getTxtCampoFornecedor() {
+	    return campoFornecedor;
+	}
+	
+	
+	
+	
+	
+	
 }

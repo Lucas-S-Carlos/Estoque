@@ -14,6 +14,8 @@ public class TelaAlertaReposicao extends JPanel {
 
     private JTextField campoProduto;
     private JComboBox<String> comboUrgencia;
+    
+    
     private JTable tabelaAlertas;
     private DefaultTableModel modeloTabela;
 
@@ -109,4 +111,17 @@ public class TelaAlertaReposicao extends JPanel {
 
         JOptionPane.showMessageDialog(this, "Ordem de Compra gerada com sucesso para o produto: " + produto + "\nQuantidade Solicitada: " + sugestao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
+    
+    
+    public JTextField getTxtCampoProduto() {
+        return campoProduto;
+    }
+
+    public JComboBox<String> getCmbUrgencia() {
+        return comboUrgencia;
+    }
+    
+    
+    
+    
 }

@@ -108,4 +108,22 @@ public class TelaGiroEstoque extends JPanel {
         gbc.weightx = 1;
         painel.add(componente, gbc);
     }
+    
+    
+    
+    public JTextField getTxtCampoNome() {
+        return campoNome;
+    }
+
+    public JComboBox<String> getCmbTipo() {
+        return comboTipo;
+    }
+
+    public JComboBox<String> getCmbClassificacao() {
+        return comboClassificacao;
+    }
+    
+    
+    
+    
 }

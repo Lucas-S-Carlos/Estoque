@@ -144,4 +144,28 @@ public class TelaEstoqueMinMax extends JPanel {
         campoEstoqueMax.setText("");
         comboStatus.setSelectedIndex(0);
     }
+    
+    
+    public JTextField getTxtCampoProduto() {
+        return campoProduto;
+    }
+
+    public JTextField getTxtCampoEstoqueMin() {
+        return campoEstoqueMin;
+    }
+
+    public JTextField getTxtCampoEstoqueMax() {
+        return campoEstoqueMax;
+    }
+
+    public JComboBox<String> getCmbStatus() {
+        return comboStatus;
+    }
+    
+    
+    
+    
+    
+    
+    
 }
