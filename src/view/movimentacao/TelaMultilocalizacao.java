@@ -16,15 +16,15 @@ public class TelaMultilocalizacao extends JPanel {
             new Color(245, 247, 250);
 
     // Campos da consulta
-    private JTextField campoProdutoPesquisa;
-    private JButton botaoEscolherProdutoPesquisa;
+    // Item consultado: produto, variação (SKU) ou kit
+    private SeletorItem seletorItemPesquisa;
 
     // Campos da transferência
     private JTextField campoOrigem;
     private JTextField campoDestino;
 
-    private JTextField campoProdutoTransferencia;
-    private JButton botaoEscolherProdutoTransferencia;
+    // Item transferido: produto, variação (SKU) ou kit
+    private SeletorItem seletorItemTransferencia;
 
     private JTextField campoQuantidade;
     private JTextField campoLote;
@@ -39,6 +39,12 @@ public class TelaMultilocalizacao extends JPanel {
 
     public TelaMultilocalizacao() {
         criarTela();
+    }
+
+
+    // Usado pela TelaMovimentacaoRastreabilidade
+    public JPanel getPainel() {
+        return this;
     }
 
 
@@ -78,29 +84,17 @@ public class TelaMultilocalizacao extends JPanel {
 
 
         produtoPanel.add(
-                new JLabel("Produto:")
+                new JLabel("Item:")
         );
 
 
-        // Campo onde aparecerá o produto escolhido
-        campoProdutoPesquisa =
-                new JTextField(20);
-
-        campoProdutoPesquisa.setEditable(false);
+        // Tipo (Produto / Variação (SKU) / Kit) + código + nome
+        seletorItemPesquisa =
+                new SeletorItem(true);
 
 
         produtoPanel.add(
-                campoProdutoPesquisa
-        );
-
-
-        // Botão para escolher produto
-        botaoEscolherProdutoPesquisa =
-                new JButton("Escolher produto");
-
-
-        produtoPanel.add(
-                botaoEscolherProdutoPesquisa
+                seletorItemPesquisa
         );
 
 
@@ -111,12 +105,6 @@ public class TelaMultilocalizacao extends JPanel {
 
         produtoPanel.add(
                 pesquisar
-        );
-
-
-        // Ação para escolher produto
-        botaoEscolherProdutoPesquisa.addActionListener(
-                e -> escolherProdutoPesquisa()
         );
 
 
@@ -274,7 +262,7 @@ public class TelaMultilocalizacao extends JPanel {
 
 
         // --------------------------------------------------
-        // PRODUTO
+        // ITEM (PRODUTO, VARIAÇÃO/SKU OU KIT)
         // --------------------------------------------------
 
         gbc.gridx = 0;
@@ -283,47 +271,13 @@ public class TelaMultilocalizacao extends JPanel {
 
 
         transferencia.add(
-                new JLabel("Produto:"),
+                new JLabel("Item:"),
                 gbc
         );
 
 
-        // Campo do produto
-        campoProdutoTransferencia =
-                new JTextField(15);
-
-
-        // Não permite digitação manual
-        campoProdutoTransferencia.setEditable(false);
-
-
-        // Botão para escolher produto
-        botaoEscolherProdutoTransferencia =
-                new JButton("Escolher");
-
-
-        // Painel contendo campo + botão
-        JPanel painelProdutoTransferencia =
-                new JPanel(
-                        new BorderLayout(5, 0)
-                );
-
-
-        painelProdutoTransferencia.setBackground(
-                Color.WHITE
-        );
-
-
-        painelProdutoTransferencia.add(
-                campoProdutoTransferencia,
-                BorderLayout.CENTER
-        );
-
-
-        painelProdutoTransferencia.add(
-                botaoEscolherProdutoTransferencia,
-                BorderLayout.EAST
-        );
+        seletorItemTransferencia =
+                new SeletorItem(true);
 
 
         gbc.gridx = 1;
@@ -331,14 +285,8 @@ public class TelaMultilocalizacao extends JPanel {
 
 
         transferencia.add(
-                painelProdutoTransferencia,
+                seletorItemTransferencia,
                 gbc
-        );
-
-
-        // Ação do botão escolher produto
-        botaoEscolherProdutoTransferencia.addActionListener(
-                e -> escolherProdutoTransferencia()
         );
 
 
@@ -534,151 +482,21 @@ public class TelaMultilocalizacao extends JPanel {
     }
 
 
-    // --------------------------------------------------
-    // LISTA DE PRODUTOS ESCOLARES
-    // --------------------------------------------------
-
-    private String[] obterProdutos() {
-
-        return new String[]{
-
-                "Caderno",
-
-                "Caneta",
-
-                "Lápis",
-
-                "Borracha",
-
-                "Apontador",
-
-                "Régua",
-
-                "Mochila escolar",
-
-                "Estojo",
-
-                "Uniforme escolar",
-
-                "Papel sulfite",
-
-                "Cartolina",
-
-                "Cola branca",
-
-                "Tesoura escolar",
-
-                "Marcador de texto",
-
-                "Pasta escolar"
-        };
-    }
-
-
-    // --------------------------------------------------
-    // ESCOLHER PRODUTO PARA PESQUISA
-    // --------------------------------------------------
-
-    private void escolherProdutoPesquisa() {
-
-        String[] produtos =
-                obterProdutos();
-
-
-        String produtoSelecionado =
-                (String) JOptionPane.showInputDialog(
-
-                        this,
-
-                        "Selecione o produto:",
-
-                        "Escolher produto",
-
-                        JOptionPane.QUESTION_MESSAGE,
-
-                        null,
-
-                        produtos,
-
-                        produtos[0]
-                );
-
-
-        if (produtoSelecionado != null) {
-
-            campoProdutoPesquisa.setText(
-                    produtoSelecionado
-            );
-        }
-    }
-
-
-    // --------------------------------------------------
-    // ESCOLHER PRODUTO PARA TRANSFERÊNCIA
-    // --------------------------------------------------
-
-    private void escolherProdutoTransferencia() {
-
-        String[] produtos =
-                obterProdutos();
-
-
-        String produtoSelecionado =
-                (String) JOptionPane.showInputDialog(
-
-                        this,
-
-                        "Selecione o produto:",
-
-                        "Escolher produto",
-
-                        JOptionPane.QUESTION_MESSAGE,
-
-                        null,
-
-                        produtos,
-
-                        produtos[0]
-                );
-
-
-        if (produtoSelecionado != null) {
-
-            campoProdutoTransferencia.setText(
-                    produtoSelecionado
-            );
-        }
-    }
-
-
     /**
      * Realiza a pesquisa do produto.
      */
     private void pesquisarProduto() {
 
-        String produto =
-                campoProdutoPesquisa
-                        .getText()
-                        .trim();
-
-
-        if (produto.isEmpty()) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-
-                    "Escolha um produto para pesquisar.",
-
-                    "Atenção",
-
-                    JOptionPane.WARNING_MESSAGE
-            );
-
-
-            botaoEscolherProdutoPesquisa.requestFocus();
+        // O item (produto, SKU ou kit) é obrigatório na consulta.
+        // A mensagem de erro é mostrada pelo próprio seletor.
+        if (!seletorItemPesquisa.validar(this, true)) {
 
             return;
         }
+
+
+        CatalogoItens.Item item =
+                seletorItemPesquisa.getItem();
 
 
         // Limpa os registros atuais
@@ -737,8 +555,9 @@ public class TelaMultilocalizacao extends JPanel {
 
                 this,
 
-                "Pesquisa realizada para o produto:\n"
-                        + produto,
+                "Pesquisa realizada para o item:\n"
+                        + item.getTipo() + ": "
+                        + item.descricao(),
 
                 "Pesquisa",
 
@@ -760,13 +579,7 @@ public class TelaMultilocalizacao extends JPanel {
                 campoDestino.getText().trim();
 
 
-        String produto =
-                campoProdutoTransferencia
-                        .getText()
-                        .trim();
-
-
-        String quantidade =
+String quantidade =
                 campoQuantidade
                         .getText()
                         .trim();
@@ -846,28 +659,17 @@ public class TelaMultilocalizacao extends JPanel {
 
 
         // --------------------------------------------------
-        // VALIDAÇÃO DO PRODUTO
+        // VALIDAÇÃO DO ITEM (PRODUTO, VARIAÇÃO/SKU OU KIT)
         // --------------------------------------------------
 
-        if (produto.isEmpty()) {
-
-            JOptionPane.showMessageDialog(
-
-                    this,
-
-                    "Escolha um produto.",
-
-                    "Atenção",
-
-                    JOptionPane.WARNING_MESSAGE
-            );
-
-
-            botaoEscolherProdutoTransferencia
-                    .requestFocus();
+        if (!seletorItemTransferencia.validar(this, true)) {
 
             return;
         }
+
+
+        CatalogoItens.Item item =
+                seletorItemTransferencia.getItem();
 
 
         // --------------------------------------------------
@@ -953,7 +755,8 @@ public class TelaMultilocalizacao extends JPanel {
 
                 "Transferência realizada com sucesso!\n\n"
 
-                        + "Produto: " + produto + "\n"
+                        + "Item (" + item.getTipo() + "): "
+                        + item.descricao() + "\n"
 
                         + "Origem: " + origem + "\n"
 
@@ -980,7 +783,7 @@ public class TelaMultilocalizacao extends JPanel {
 
         campoDestino.setText("");
 
-        campoProdutoTransferencia.setText("");
+        seletorItemTransferencia.limpar();
 
         campoQuantidade.setText("");
 

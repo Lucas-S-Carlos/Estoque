@@ -23,12 +23,18 @@ public class TelaLoteSerie extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	// Kit não tem lote nem número de série próprios
+	// (o controle é feito nos produtos/SKUs que o compõem).
+	// Para permitir kit nesta tela, troque para true.
+	private static final boolean PERMITIR_KIT = false;
+
 	// Cor de fundo da tela
 	private final Color COR_FUNDO =
 	        new Color(245, 247, 250);
 
 	// Campos de pesquisa
-	private JTextField campoProduto;
+	// Item pesquisado: produto ou variação (SKU)
+	private SeletorItem seletorItem;
 	private JComboBox<String> campoTipo;
 	private JTextField campoLote;
 	private JTextField campoSerie;
@@ -43,6 +49,11 @@ public class TelaLoteSerie extends JPanel {
 	public TelaLoteSerie() {
 
 	    criarTela();
+	}
+
+	// Usado pela TelaMovimentacaoRastreabilidade
+	public JPanel getPainel() {
+	    return this;
 	}
 
 	/**
@@ -84,19 +95,31 @@ public class TelaLoteSerie extends JPanel {
 	            GridBagConstraints.HORIZONTAL;
 
 	    // --------------------------------------------------
-	    // PRODUTO
+	    // ITEM (PRODUTO OU VARIAÇÃO/SKU)
 	    // --------------------------------------------------
 
-	    campoProduto =
-	            new JTextField(20);
+	    seletorItem =
+	            new SeletorItem(PERMITIR_KIT);
 
-	    adicionarCampo(
-	            filtros,
-	            gbc,
-	            0,
-	            "Produto:",
-	            campoProduto
+	    gbc.gridx = 0;
+	    gbc.gridy = 0;
+	    gbc.weightx = 0;
+
+	    filtros.add(
+	            new JLabel("Item:"),
+	            gbc
 	    );
+
+	    gbc.gridx = 1;
+	    gbc.gridwidth = 3;
+	    gbc.weightx = 1;
+
+	    filtros.add(
+	            seletorItem,
+	            gbc
+	    );
+
+	    gbc.gridwidth = 1;
 
 	    // --------------------------------------------------
 	    // TIPO
@@ -113,10 +136,9 @@ public class TelaLoteSerie extends JPanel {
 	    adicionarCampo(
 	            filtros,
 	            gbc,
-	            0,
+	            1,
 	            "Tipo:",
-	            campoTipo,
-	            2
+	            campoTipo
 	    );
 
 	    // --------------------------------------------------
@@ -131,7 +153,8 @@ public class TelaLoteSerie extends JPanel {
 	            gbc,
 	            1,
 	            "Lote:",
-	            campoLote
+	            campoLote,
+	            2
 	    );
 
 	    // --------------------------------------------------
@@ -144,10 +167,9 @@ public class TelaLoteSerie extends JPanel {
 	    adicionarCampo(
 	            filtros,
 	            gbc,
-	            1,
+	            2,
 	            "Número de série:",
-	            campoSerie,
-	            2
+	            campoSerie
 	    );
 
 	    // --------------------------------------------------
@@ -162,7 +184,8 @@ public class TelaLoteSerie extends JPanel {
 	            gbc,
 	            2,
 	            "Data de fabricação:",
-	            campoFabricacao
+	            campoFabricacao,
+	            2
 	    );
 
 	    // --------------------------------------------------
@@ -175,10 +198,9 @@ public class TelaLoteSerie extends JPanel {
 	    adicionarCampo(
 	            filtros,
 	            gbc,
-	            2,
+	            3,
 	            "Data de validade:",
-	            campoValidade,
-	            2
+	            campoValidade
 	    );
 
 	    // --------------------------------------------------
@@ -193,7 +215,8 @@ public class TelaLoteSerie extends JPanel {
 	            gbc,
 	            3,
 	            "Fornecedor:",
-	            campoFornecedor
+	            campoFornecedor,
+	            2
 	    );
 
 	    // --------------------------------------------------
@@ -204,7 +227,7 @@ public class TelaLoteSerie extends JPanel {
 	            new JButton("Pesquisar");
 
 	    gbc.gridx = 3;
-	    gbc.gridy = 3;
+	    gbc.gridy = 4;
 	    gbc.weightx = 0;
 
 	    filtros.add(
@@ -223,7 +246,9 @@ public class TelaLoteSerie extends JPanel {
 
 	    String[] colunas = {
 	            "Data/Hora",
-	            "Produto",
+	            "Tipo do item",
+	            "Código",
+	            "Item",
 	            "Movimento",
 	            "Quantidade",
 	            "Origem",
@@ -352,6 +377,15 @@ public class TelaLoteSerie extends JPanel {
 	 */
 	private void pesquisar() {
 
+	    // O item é opcional na pesquisa, mas se for informado
+	    // o código precisa existir no cadastro.
+	    if (!seletorItem.validar(this, false)) {
+	        return;
+	    }
+
+	    CatalogoItens.Item item =
+	            seletorItem.getItem();
+
 	    // Por enquanto a tabela está vazia.
 	    // Aqui futuramente será feita a consulta
 	    // ao banco de dados.
@@ -359,6 +393,8 @@ public class TelaLoteSerie extends JPanel {
 	    JOptionPane.showMessageDialog(
 	            this,
 	            "Pesquisa realizada.\n\n"
+	            + (item == null ? "" : "Item (" + item.getTipo() + "): "
+	                    + item.descricao() + "\n\n")
 	            + "Em breve esta função será conectada "
 	            + "ao banco de dados.",
 	            "Pesquisa",
