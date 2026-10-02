@@ -26,10 +26,9 @@ public class TelaEntradaSaida extends JPanel {
     // Campos do formulário
     private JComboBox<String> campoTipo;
 
-    private JTextField campoProduto;
-    private JButton botaoEscolherProduto;
+    // Item movimentado: produto, variação (SKU) ou kit
+    private SeletorItem seletorItem;
 
-    private JTextField campoCodigo;
     private JTextField campoQuantidade;
 
     private JComboBox<String> campoMotivo;
@@ -44,6 +43,12 @@ public class TelaEntradaSaida extends JPanel {
 
     public TelaEntradaSaida() {
         criarTela();
+    }
+
+
+    // Usado pela TelaMovimentacaoRastreabilidade
+    public JPanel getPainel() {
+        return this;
     }
 
 
@@ -99,75 +104,20 @@ public class TelaEntradaSaida extends JPanel {
 
 
         // --------------------------------------------------
-        // PRODUTO
+        // ITEM (PRODUTO, VARIAÇÃO/SKU OU KIT)
         // --------------------------------------------------
 
-        campoProduto = new JTextField(20);
-
-        // Impede o usuário de digitar diretamente
-        // o nome do produto.
-        campoProduto.setEditable(false);
-
-
-        // Botão para escolher o produto
-        botaoEscolherProduto = new JButton(
-            "Escolher produto"
-        );
-
-
-        // Quando clicar no botão,
-        // abre a janela para escolher o produto.
-        botaoEscolherProduto.addActionListener(
-            e -> escolherProduto()
-        );
-
-
-        // Painel que contém o campo e o botão
-        JPanel painelProduto = new JPanel(
-            new BorderLayout(5, 0)
-        );
-
-        painelProduto.setBackground(Color.WHITE);
-
-
-        painelProduto.add(
-            campoProduto,
-            BorderLayout.CENTER
-        );
-
-
-        painelProduto.add(
-            botaoEscolherProduto,
-            BorderLayout.EAST
-        );
+        // O usuário escolhe o tipo do item, digita o código
+        // (ou usa o botão Buscar) e o nome aparece sozinho.
+        seletorItem = new SeletorItem(true);
 
 
         adicionarCampo(
             formulario,
             gbc,
             1,
-            "Produto:",
-            painelProduto
-        );
-
-
-        // --------------------------------------------------
-        // CÓDIGO DO PRODUTO
-        // --------------------------------------------------
-
-        campoCodigo = new JTextField(20);
-
-        // O código será preenchido automaticamente
-        // de acordo com o produto escolhido.
-        campoCodigo.setEditable(false);
-
-
-        adicionarCampo(
-            formulario,
-            gbc,
-            2,
-            "Código do produto:",
-            campoCodigo
+            "Item:",
+            seletorItem
         );
 
 
@@ -181,7 +131,7 @@ public class TelaEntradaSaida extends JPanel {
         adicionarCampo(
             formulario,
             gbc,
-            3,
+            2,
             "Quantidade:",
             campoQuantidade
         );
@@ -206,7 +156,7 @@ public class TelaEntradaSaida extends JPanel {
         adicionarCampo(
             formulario,
             gbc,
-            4,
+            3,
             "Motivo:",
             campoMotivo
         );
@@ -222,7 +172,7 @@ public class TelaEntradaSaida extends JPanel {
         adicionarCampo(
             formulario,
             gbc,
-            5,
+            4,
             "Documento relacionado:",
             campoDocumento
         );
@@ -238,7 +188,7 @@ public class TelaEntradaSaida extends JPanel {
         adicionarCampo(
             formulario,
             gbc,
-            6,
+            5,
             "Origem:",
             campoOrigem
         );
@@ -254,7 +204,7 @@ public class TelaEntradaSaida extends JPanel {
         adicionarCampo(
             formulario,
             gbc,
-            7,
+            6,
             "Destino:",
             campoDestino
         );
@@ -270,7 +220,7 @@ public class TelaEntradaSaida extends JPanel {
         adicionarCampo(
             formulario,
             gbc,
-            8,
+            7,
             "Responsável:",
             campoResponsavel
         );
@@ -281,7 +231,7 @@ public class TelaEntradaSaida extends JPanel {
         // --------------------------------------------------
 
         gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridy = 8;
         gbc.weightx = 0;
 
 
@@ -403,168 +353,6 @@ public class TelaEntradaSaida extends JPanel {
 
 
     // --------------------------------------------------
-    // ESCOLHER PRODUTO
-    // --------------------------------------------------
-
-    private void escolherProduto() {
-
-        /*
-         * Lista de produtos relacionados
-         * ao ambiente escolar.
-         */
-
-        String[] produtos = {
-
-            "Caderno",
-
-            "Caneta",
-
-            "Lápis",
-
-            "Borracha",
-
-            "Apontador",
-
-            "Régua",
-
-            "Mochila escolar",
-
-            "Estojo",
-
-            "Uniforme escolar",
-
-            "Papel sulfite",
-
-            "Cartolina",
-
-            "Cola branca",
-
-            "Tesoura escolar",
-
-            "Marcador de texto",
-
-            "Pasta escolar"
-        };
-
-
-        // Abre uma janela para o usuário escolher
-        // um dos produtos disponíveis.
-
-        String produtoSelecionado =
-            (String) JOptionPane.showInputDialog(
-
-                this,
-
-                "Selecione o produto:",
-
-                "Escolher produto",
-
-                JOptionPane.QUESTION_MESSAGE,
-
-                null,
-
-                produtos,
-
-                produtos[0]
-            );
-
-
-        // Verifica se o usuário realmente
-        // escolheu algum produto.
-
-        if (produtoSelecionado != null) {
-
-            // Coloca o nome do produto
-            // no campo Produto.
-
-            campoProduto.setText(
-                produtoSelecionado
-            );
-
-
-            // Define o código automaticamente.
-
-            switch (produtoSelecionado) {
-
-                case "Caderno":
-                    campoCodigo.setText("ESC001");
-                    break;
-
-
-                case "Caneta":
-                    campoCodigo.setText("ESC002");
-                    break;
-
-
-                case "Lápis":
-                    campoCodigo.setText("ESC003");
-                    break;
-
-
-                case "Borracha":
-                    campoCodigo.setText("ESC004");
-                    break;
-
-
-                case "Apontador":
-                    campoCodigo.setText("ESC005");
-                    break;
-
-
-                case "Régua":
-                    campoCodigo.setText("ESC006");
-                    break;
-
-
-                case "Mochila escolar":
-                    campoCodigo.setText("ESC007");
-                    break;
-
-
-                case "Estojo":
-                    campoCodigo.setText("ESC008");
-                    break;
-
-
-                case "Uniforme escolar":
-                    campoCodigo.setText("ESC009");
-                    break;
-
-
-                case "Papel sulfite":
-                    campoCodigo.setText("ESC010");
-                    break;
-
-
-                case "Cartolina":
-                    campoCodigo.setText("ESC011");
-                    break;
-
-
-                case "Cola branca":
-                    campoCodigo.setText("ESC012");
-                    break;
-
-
-                case "Tesoura escolar":
-                    campoCodigo.setText("ESC013");
-                    break;
-
-
-                case "Marcador de texto":
-                    campoCodigo.setText("ESC014");
-                    break;
-
-
-                case "Pasta escolar":
-                    campoCodigo.setText("ESC015");
-                    break;
-            }
-        }
-    }
-
-
-    // --------------------------------------------------
     // LIMPAR CAMPOS
     // --------------------------------------------------
 
@@ -573,9 +361,7 @@ public class TelaEntradaSaida extends JPanel {
         campoTipo.setSelectedIndex(0);
 
 
-        campoProduto.setText("");
-
-        campoCodigo.setText("");
+        seletorItem.limpar();
 
         campoQuantidade.setText("");
 
@@ -606,15 +392,7 @@ public class TelaEntradaSaida extends JPanel {
             (String) campoTipo.getSelectedItem();
 
 
-        String produto =
-            campoProduto.getText().trim();
-
-
-        String codigo =
-            campoCodigo.getText().trim();
-
-
-        String quantidade =
+String quantidade =
             campoQuantidade.getText().trim();
 
 
@@ -627,51 +405,20 @@ public class TelaEntradaSaida extends JPanel {
 
 
         // --------------------------------------------------
-        // VALIDAÇÃO DO PRODUTO
+        // VALIDAÇÃO DO ITEM (PRODUTO, VARIAÇÃO/SKU OU KIT)
         // --------------------------------------------------
 
-        if (produto.isEmpty()) {
+        // Confere se o código existe no cadastro.
+        // A própria mensagem de erro é mostrada pelo seletor.
 
-            JOptionPane.showMessageDialog(
-
-                this,
-
-                "Escolha um produto.",
-
-                "Atenção",
-
-                JOptionPane.WARNING_MESSAGE
-            );
-
-
-            botaoEscolherProduto.requestFocus();
+        if (!seletorItem.validar(this, true)) {
 
             return;
         }
 
 
-        // --------------------------------------------------
-        // VALIDAÇÃO DO CÓDIGO
-        // --------------------------------------------------
-
-        if (codigo.isEmpty()) {
-
-            JOptionPane.showMessageDialog(
-
-                this,
-
-                "Escolha um produto para gerar o código.",
-
-                "Atenção",
-
-                JOptionPane.WARNING_MESSAGE
-            );
-
-
-            botaoEscolherProduto.requestFocus();
-
-            return;
-        }
+        CatalogoItens.Item item =
+            seletorItem.getItem();
 
 
         // --------------------------------------------------
@@ -782,9 +529,11 @@ public class TelaEntradaSaida extends JPanel {
 
             + "Tipo: " + tipo + "\n"
 
-            + "Produto: " + produto + "\n"
+            + "Tipo do item: " + item.getTipo() + "\n"
 
-            + "Código: " + codigo + "\n"
+            + "Código: " + item.getCodigo() + "\n"
+
+            + "Item: " + item.getNome() + "\n"
 
             + "Quantidade: " + quantidade + "\n"
 
