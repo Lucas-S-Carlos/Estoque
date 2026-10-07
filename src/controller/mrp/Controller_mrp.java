@@ -1,6 +1,6 @@
 package controller.mrp;
 
-import view.mrp.TelaMRP;
+import view.suprimentos.TelaMRP;
 
 import javax.swing.JOptionPane;
 
