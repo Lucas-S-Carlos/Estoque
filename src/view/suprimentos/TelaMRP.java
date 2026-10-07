@@ -9,7 +9,6 @@ public class TelaMRP extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    
     // cores da padronização visual
     private static final Color AZUL_MENU = new Color(27, 54, 93);
     private static final Color FUNDO = new Color(245, 247, 250);
@@ -17,11 +16,19 @@ public class TelaMRP extends JPanel {
     private static final Color TEXTO = new Color(30, 38, 52);
     private static final Color CINZA = Color.GRAY;
 
-    
-    // campo para pesquisar produto
-    private final JTextField produto = new JTextField(20);
+    // tipo do item para filtro
+    private final JComboBox<String> tipoItem = new JComboBox<String>(
+        new String[] {
+            "Todos",
+            "Produto",
+            "Variação",
+            "Kit"
+        }
+    );
 
-    
+    // código do item para filtro
+    private final JTextField codigo = new JTextField(20);
+
     // lista de categorias para filtro
     private final JComboBox<String> categoria = new JComboBox<String>(
         new String[] {
@@ -32,7 +39,6 @@ public class TelaMRP extends JPanel {
         }
     );
 
-    
     // lista de status para filtro
     private final JComboBox<String> status = new JComboBox<String>(
         new String[] {
@@ -44,7 +50,6 @@ public class TelaMRP extends JPanel {
         }
     );
 
-    
     // campos sobre os detalhes da sugestão selecionada
     private final JTextField quantidadeSugerida = new JTextField(15);
     private final JTextField quantidadeReservada = new JTextField(15);
@@ -53,53 +58,37 @@ public class TelaMRP extends JPanel {
     private final JTextField responsavel = new JTextField(20);
     private final JTextArea justificativa = new JTextArea(3, 30);
 
-    
     // modelo da tabela e nomes das colunas
     private final DefaultTableModel modelo = new DefaultTableModel(
-        new Object[] { 
-        		"Item", 
-        		"Estoque atual", 
-        		"Estoque mínimo", 
-        		"Estoque máximo", 
-        		"Lead time", 
-        		"Sugestão", 
-        		"Status"
-        },
-        0
+        new Object[] { "Tipo", "Código", "Item", "Estoque atual", "Estoque mínimo", "Estoque máximo", "Lead time", "Sugestão", "Status" }, 0
     ) {
-    	// impede que o usuário edite os campos da tabela diretamente
+        // impede que o usuário edite os campos da tabela diretamente
         public boolean isCellEditable(int l, int c) {
             return false;
         }
     };
 
-    
     // cria a tabela a partir do modelo acima
     private final JTable tabela = new JTable(modelo);
 
-    
     // construtor da tela
     public TelaMRP() {
-    	
-    	// organização principal da tela
+        // organização principal da tela
         setLayout(new BorderLayout(8, 8));
-        
+
         // margem ao redor da tela
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
+
         // cor de fundo
         setBackground(FUNDO);
 
         // monta os componentes
         montar();
-        
     }
 
-    
     // monta a parte visual da tela
     private void montar() {
-
-    	// título principal
+        // título principal
         JLabel titulo = new JLabel("Sugestões de Reposição - MRP");
         titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 20f));
         titulo.setForeground(AZUL_MENU);
@@ -109,11 +98,7 @@ public class TelaMRP extends JPanel {
         f.setBackground(FUNDO);
 
         // borda e título do painel de filtros
-        TitledBorder bordaFiltros = BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(BORDA),
-            "Filtros"
-        );
-
+        TitledBorder bordaFiltros = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(BORDA), "Filtros");
         bordaFiltros.setTitleColor(TEXTO);
         f.setBorder(bordaFiltros);
 
@@ -122,11 +107,11 @@ public class TelaMRP extends JPanel {
         g.insets = new Insets(4, 4, 4, 4);
 
         // adiciona os campos de filtro
-        componente(f, g, 0, "Produto:", produto);
-        componente(f, g, 1, "Categoria:", categoria);
-        componente(f, g, 2, "Status:", status);
+        componente(f, g, 0, "Tipo do item:", tipoItem);
+        componente(f, g, 1, "Código:", codigo);
+        componente(f, g, 2, "Categoria:", categoria);
+        componente(f, g, 3, "Status:", status);
 
-        
         // painel dos botões de filtro
         JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT));
         b.setBackground(FUNDO);
@@ -137,11 +122,10 @@ public class TelaMRP extends JPanel {
         // aplica o padrão visual aos botões
         configurarBotao(filtrar);
         configurarBotao(limpar);
-        
+
         b.add(filtrar);
         b.add(limpar);
 
-        
         // título, filtros e botões na parte superior
         JPanel n = new JPanel(new BorderLayout());
         n.setBackground(FUNDO);
@@ -152,24 +136,19 @@ public class TelaMRP extends JPanel {
 
         add(n, BorderLayout.NORTH);
 
-        
         // painel central com a tabela de sugestões
         JPanel c = new JPanel(new BorderLayout());
         c.setBackground(FUNDO);
 
         // borda e título do painel de sugestões
-        TitledBorder bordaTabela = BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(BORDA),
-            "Sugestões geradas pelo MRP"
-        );
-
+        TitledBorder bordaTabela = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(BORDA), "Sugestões geradas pelo MRP");
         bordaTabela.setTitleColor(TEXTO);
         c.setBorder(bordaTabela);
 
         // configuração visual da tabela
         tabela.setForeground(TEXTO);
         tabela.setGridColor(BORDA);
-        
+
         // as cores mudam quando a linha é selecionada
         tabela.setSelectionBackground(AZUL_MENU);
         tabela.setSelectionForeground(Color.WHITE);
@@ -178,29 +157,22 @@ public class TelaMRP extends JPanel {
         tabela.getTableHeader().setBackground(AZUL_MENU);
         tabela.getTableHeader().setForeground(Color.WHITE);
 
-        
         // JScrollPane permite rolagem quando se têm muitas linhas
         JScrollPane scrollTabela = new JScrollPane(tabela);
         scrollTabela.setBorder(BorderFactory.createLineBorder(BORDA));
 
         c.add(scrollTabela);
-
         add(c, BorderLayout.CENTER);
 
         // permite selecionar uma única linha da tabela por vez
         tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        
         // painel (adesivo) coms os detalhes da sugestão
         JPanel d = new JPanel(new GridBagLayout());
         d.setBackground(FUNDO);
 
         // borda e título do painel de detalhes
-        TitledBorder bordaDetalhes = BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(BORDA),
-            "Detalhes da sugestão"
-        );
-
+        TitledBorder bordaDetalhes = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(BORDA), "Detalhes da sugestão");
         bordaDetalhes.setTitleColor(TEXTO);
         d.setBorder(bordaDetalhes);
 
@@ -225,7 +197,6 @@ public class TelaMRP extends JPanel {
 
         componente(d, gd, 5, "Justificativa:", scrollJustificativa);
 
-        
         // painel (adesivo) dos botões da sugestão
         JPanel a = new JPanel(new FlowLayout(FlowLayout.LEFT));
         a.setBackground(FUNDO);
@@ -246,7 +217,6 @@ public class TelaMRP extends JPanel {
         a.add(recusar);
         a.add(gerar);
 
-        
         // junta os detalhes e os botões na parte inferior da tela
         JPanel s = new JPanel(new BorderLayout());
         s.setBackground(FUNDO);
@@ -255,52 +225,54 @@ public class TelaMRP extends JPanel {
         s.add(a, BorderLayout.SOUTH);
 
         add(s, BorderLayout.SOUTH);
-        
     }
-    
+
     // getters dos campos para Controller
-    public JTextField getTxtProduto() {
-        return produto;
+    public JComboBox<String> getCmbTipoItem() { 
+    	return tipoItem; 
     }
-
-    public JComboBox<String> getCmbCategoria() {
-        return categoria;
+    
+    public JTextField getTxtCodigo() { 
+    	return codigo; 
     }
-
-    public JComboBox<String> getCmbStatus() {
-        return status;
+    
+    public JComboBox<String> getCmbCategoria() { 
+    	return categoria; 
     }
-
-    public JTextField getTxtQuantidadeSugerida() {
-        return quantidadeSugerida;
+    
+    public JComboBox<String> getCmbStatus() { 
+    	return status; 
     }
-
-    public JTextField getTxtQuantidadeReservada() {
-        return quantidadeReservada;
+    
+    public JTextField getTxtQuantidadeSugerida() { 
+    	return quantidadeSugerida; 
     }
-
-    public JTextField getTxtQuantidadeSolicitada() {
-        return quantidadeSolicitada;
+    
+    public JTextField getTxtQuantidadeReservada() { 
+    	return quantidadeReservada;
     }
-
-    public JTextField getTxtDataPrevista() {
-        return dataPrevista;
+    
+    public JTextField getTxtQuantidadeSolicitada() { 
+    	return quantidadeSolicitada; 
     }
-
-    public JTextField getTxtResponsavel() {
-        return responsavel;
+    
+    public JTextField getTxtDataPrevista() { 
+    	return dataPrevista; 
     }
-
-    public JTextArea getTxtJustificativa() {
-        return justificativa;
+    
+    public JTextField getTxtResponsavel() { 
+    	return responsavel; 
     }
-
-    public JTable getTabela() {
-        return tabela;
+    
+    public JTextArea getTxtJustificativa() { 
+    	return justificativa; 
+    }
+    
+    public JTable getTabela() { 
+    	return tabela; 
     }
     
 
-        
     // aplica o mesmo padrão visual aos botões
     private void configurarBotao(JButton botao) {
         botao.setBackground(AZUL_MENU);
@@ -309,18 +281,11 @@ public class TelaMRP extends JPanel {
         botao.setFocusPainted(false);
     }
 
-    
     // método auxiliar que adiciona um label na esquerda do seu campo, no GridBagLayout
-    // exemplo: componente(f, g, 0, "Produto:", produto);
-    // f é o painel; g é a posição do gridBagLayout; 0 é a linha; "Produto" é o texto do label; produto é o campo à direita
-    private void componente(
-        JPanel p,
-        GridBagConstraints g,
-        int y,
-        String r,
-        Component t
-    ) {
-    	// texto do campo na coluna 0
+    // exemplo: componente(f, g, 0, "Tipo do item:", tipoItem);
+    // f é o painel; g é a posição do gridBagLayout; 0 é a linha; "Tipo do item" é o texto do label; tipoItem é o campo à direita
+    private void componente(JPanel p, GridBagConstraints g, int y, String r, Component t) {
+        // texto do campo na coluna 0
         g.gridx = 0;
         g.gridy = y;
         g.weightx = 0;
@@ -328,7 +293,6 @@ public class TelaMRP extends JPanel {
 
         JLabel label = new JLabel(r);
         label.setForeground(TEXTO);
-
         p.add(label, g);
 
         // campo correspondente na coluna 1
@@ -337,7 +301,6 @@ public class TelaMRP extends JPanel {
         g.fill = GridBagConstraints.HORIZONTAL;
 
         t.setForeground(TEXTO);
-
         p.add(t, g);
     }
 }
