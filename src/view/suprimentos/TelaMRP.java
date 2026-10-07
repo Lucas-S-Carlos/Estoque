@@ -1,4 +1,4 @@
-package view.mrp;
+package view.suprimentos;
 
 import java.awt.*;
 import javax.swing.*;
@@ -47,6 +47,8 @@ public class TelaMRP extends JPanel {
     
     // campos sobre os detalhes da sugestão selecionada
     private final JTextField quantidadeSugerida = new JTextField(15);
+    private final JTextField quantidadeReservada = new JTextField(15);
+    private final JTextField quantidadeSolicitada = new JTextField(15);
     private final JTextField dataPrevista = new JTextField(15);
     private final JTextField responsavel = new JTextField(20);
     private final JTextArea justificativa = new JTextArea(3, 30);
@@ -54,7 +56,14 @@ public class TelaMRP extends JPanel {
     
     // modelo da tabela e nomes das colunas
     private final DefaultTableModel modelo = new DefaultTableModel(
-        new Object[] { "Item", "Estoque atual", "Estoque mínimo", "Lead time", "Sugestão", "Status"
+        new Object[] { 
+        		"Item", 
+        		"Estoque atual", 
+        		"Estoque mínimo", 
+        		"Estoque máximo", 
+        		"Lead time", 
+        		"Sugestão", 
+        		"Status"
         },
         0
     ) {
@@ -84,9 +93,6 @@ public class TelaMRP extends JPanel {
         // monta os componentes
         montar();
         
-        // preenche com os dados fictícios para ilustrar
-        preencherDadosExemplo();
-        preencherDetalhesExemplo();
     }
 
     
@@ -203,8 +209,10 @@ public class TelaMRP extends JPanel {
 
         // campos de detalhes da sugestão
         componente(d, gd, 0, "Quantidade sugerida:", quantidadeSugerida);
-        componente(d, gd, 1, "Data prevista de reposição:", dataPrevista);
-        componente(d, gd, 2, "Responsável:", responsavel);
+        componente(d, gd, 1, "Quantidade reservada:", quantidadeReservada);
+        componente(d, gd, 2, "Quantidade já solicitada/em pedido:", quantidadeSolicitada);
+        componente(d, gd, 3, "Data prevista de reposição:", dataPrevista);
+        componente(d, gd, 4, "Responsável:", responsavel);
 
         // a justificativa quebra de linha automaticamente (evita scroll horizontal); quebra entre palavras, não no meio delas
         justificativa.setLineWrap(true);
@@ -215,7 +223,7 @@ public class TelaMRP extends JPanel {
         JScrollPane scrollJustificativa = new JScrollPane(justificativa);
         scrollJustificativa.setBorder(BorderFactory.createLineBorder(BORDA));
 
-        componente(d, gd, 3, "Justificativa:", scrollJustificativa);
+        componente(d, gd, 5, "Justificativa:", scrollJustificativa);
 
         
         // painel (adesivo) dos botões da sugestão
@@ -247,64 +255,52 @@ public class TelaMRP extends JPanel {
         s.add(a, BorderLayout.SOUTH);
 
         add(s, BorderLayout.SOUTH);
+        
+    }
+    
+    // getters dos campos para Controller
+    public JTextField getTxtProduto() {
+        return produto;
     }
 
-    
-    // preenche a tabela com dados fictícios
-    private void preencherDadosExemplo() {
-        // antes de adiconar os exemplos, ele limpa as linhas
-    	modelo.setRowCount(0);
-
-        modelo.addRow(new Object[] {
-            "Cabo HDMI",
-            "3",
-            "10",
-            "5 dias",
-            "Comprar 7",
-            "Pendente"
-        });
-
-        modelo.addRow(new Object[] {
-            "Kit Arduino",
-            "2",
-            "8",
-            "10 dias",
-            "Comprar 6",
-            "Pendente"
-        });
-
-        modelo.addRow(new Object[] {
-            "Mouse USB",
-            "15",
-            "10",
-            "3 dias",
-            "Sem ação",
-            "OK"
-        });
-
-        modelo.addRow(new Object[] {
-            "Projetor",
-            "1",
-            "3",
-            "7 dias",
-            "Comprar 2",
-            "Pendente"
-        });
+    public JComboBox<String> getCmbCategoria() {
+        return categoria;
     }
 
-    
-    // preenche os campos de detalhes com dados fictícios
-    private void preencherDetalhesExemplo() {
-        quantidadeSugerida.setText("Comprar 7 unidades");
-        dataPrevista.setText("25/08/2026");
-        responsavel.setText("Almoxarifado");
-
-        justificativa.setText(
-            "O estoque atual está abaixo do estoque mínimo definido para o item."
-        );
+    public JComboBox<String> getCmbStatus() {
+        return status;
     }
 
+    public JTextField getTxtQuantidadeSugerida() {
+        return quantidadeSugerida;
+    }
+
+    public JTextField getTxtQuantidadeReservada() {
+        return quantidadeReservada;
+    }
+
+    public JTextField getTxtQuantidadeSolicitada() {
+        return quantidadeSolicitada;
+    }
+
+    public JTextField getTxtDataPrevista() {
+        return dataPrevista;
+    }
+
+    public JTextField getTxtResponsavel() {
+        return responsavel;
+    }
+
+    public JTextArea getTxtJustificativa() {
+        return justificativa;
+    }
+
+    public JTable getTabela() {
+        return tabela;
+    }
     
+
+        
     // aplica o mesmo padrão visual aos botões
     private void configurarBotao(JButton botao) {
         botao.setBackground(AZUL_MENU);
