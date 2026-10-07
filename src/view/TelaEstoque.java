@@ -144,6 +144,8 @@ public class TelaEstoque extends JFrame {
 
 		JMenuItem telaMRP =
 			Item("MRP", 12);
+		
+		JMenuItem telaHistorico = Item("Histórico", 13);
 
 		// Menu Sistema
 		JMenuItem sobre = new JMenuItem("Sobre");
@@ -194,6 +196,7 @@ public class TelaEstoque extends JFrame {
 		// Inventário
 		inventario.add(telaAjustes);
 		inventario.add(telaInventario);
+		inventario.add(telaHistorico);
 
 		// Movimentação
 		movimentacao.add(telaEntradaSaida);
@@ -234,7 +237,8 @@ public class TelaEstoque extends JFrame {
 	private void abrirModulo(int modulo) {
 
 		String titulo;
-		JPanel painel;
+		JPanel painel = null;
+		
 
 		if (modulo == 1) {
 
@@ -356,6 +360,12 @@ public class TelaEstoque extends JFrame {
 
 			painel = new TelaMRP();
 
+		} else if (modulo == 13) {
+			titulo = "Histórico";
+			if (selecionar(titulo)) {
+				return;
+			}
+			painel = new TelaHistorico();
 		} else {
 
 			JOptionPane.showMessageDialog(
