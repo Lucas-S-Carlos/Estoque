@@ -9,26 +9,18 @@ public class TelaRecebimento extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
+
     // cores da padronização visual
     private static final Color AZUL_MENU = new Color(27, 54, 93);
     private static final Color FUNDO = new Color(245, 247, 250);
     private static final Color BORDA = new Color(226, 232, 240);
     private static final Color TEXTO = new Color(30, 38, 52);
 
+
     // campos para os filtros
     private final JTextField idPedidoFiltro = new JTextField(15);
-
-    private final JComboBox<String> tipoItemFiltro = new JComboBox<String>(
-        new String[] {
-            "Todos",
-            "Produto",
-            "Variação",
-            "Kit"
-        }
-    );
-
-    private final JTextField codigoFiltro = new JTextField(20);
     private final JTextField fornecedorFiltro = new JTextField(20);
+    private final JTextField produtoFiltro = new JTextField(20);
 
     private final JComboBox<String> situacaoFiltro = new JComboBox<String>(
         new String[] {
@@ -39,9 +31,10 @@ public class TelaRecebimento extends JPanel {
         }
     );
 
+
     // modelo da tabela de pedidos aguardando recebimento
     private final DefaultTableModel modeloPedidos = new DefaultTableModel(
-        new Object[] { "ID Pedido", "Fornecedor", "Tipo", "Código", "Item", "Quantidade pedida", "Data do pedido", "Situação" }, 0
+        new Object[] { "ID Pedido", "Fornecedor", "Produto", "Quantidade pedida", "Data do pedido", "Situação" }, 0
     ) {
         // impede que o usuário edite os campos da tabela diretamente
         public boolean isCellEditable(int l, int c) {
@@ -49,16 +42,17 @@ public class TelaRecebimento extends JPanel {
         }
     };
 
+
     // cria a tabela a partir do modelo acima
     private final JTable tabelaPedidos = new JTable(modeloPedidos);
+
 
     // dados do pedido selecionado
     private final JTextField idPedido = new JTextField(15);
     private final JTextField fornecedor = new JTextField(20);
-    private final JTextField tipoItem = new JTextField(15);
-    private final JTextField codigo = new JTextField(20);
-    private final JTextField item = new JTextField(20);
+    private final JTextField produto = new JTextField(20);
     private final JTextField quantidadeSolicitada = new JTextField(15);
+
 
     // campos da conferência
     private final JTextField quantidadeRecebida = new JTextField(15);
@@ -72,14 +66,17 @@ public class TelaRecebimento extends JPanel {
     private final JTextField documentoAquisicao = new JTextField(20);
     private final JTextField responsavel = new JTextField(20);
 
-    // campos utilizados quando aplicáveis ao item
+
+    // campos utilizados quando aplicáveis ao produto
     private final JTextField lote = new JTextField(20);
     private final JTextField numeroSerie = new JTextField(20);
     private final JTextField dataFabricacao = new JTextField(15);
     private final JTextField dataValidade = new JTextField(15);
 
+
     // construtor da tela
     public TelaRecebimento() {
+
         // organização principal da tela
         setLayout(new BorderLayout(8, 8));
 
@@ -93,12 +90,15 @@ public class TelaRecebimento extends JPanel {
         montar();
     }
 
+
     // monta a parte visual da tela
     private void montar() {
+
         // título principal
         JLabel titulo = new JLabel("Recebimento / Conferência");
         titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 20f));
         titulo.setForeground(AZUL_MENU);
+
 
         // painel com os filtros
         JPanel f = new JPanel(new GridBagLayout());
@@ -115,10 +115,10 @@ public class TelaRecebimento extends JPanel {
 
         // adiciona os campos de filtro
         componente(f, g, 0, "ID do Pedido:", idPedidoFiltro);
-        componente(f, g, 1, "Tipo do item:", tipoItemFiltro);
-        componente(f, g, 2, "Código:", codigoFiltro);
-        componente(f, g, 3, "Fornecedor:", fornecedorFiltro);
-        componente(f, g, 4, "Situação:", situacaoFiltro);
+        componente(f, g, 1, "Fornecedor:", fornecedorFiltro);
+        componente(f, g, 2, "Produto:", produtoFiltro);
+        componente(f, g, 3, "Situação:", situacaoFiltro);
+
 
         // painel dos botões de filtro
         JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -134,6 +134,7 @@ public class TelaRecebimento extends JPanel {
         b.add(filtrar);
         b.add(limpar);
 
+
         // título, filtros e botões na parte superior
         JPanel n = new JPanel(new BorderLayout());
         n.setBackground(FUNDO);
@@ -141,6 +142,7 @@ public class TelaRecebimento extends JPanel {
         n.add(titulo, BorderLayout.NORTH);
         n.add(f, BorderLayout.CENTER);
         n.add(b, BorderLayout.SOUTH);
+
 
         // painel com os pedidos aguardando recebimento
         JPanel painelPedidos = new JPanel(new BorderLayout());
@@ -167,7 +169,9 @@ public class TelaRecebimento extends JPanel {
 
         JScrollPane scrollPedidos = new JScrollPane(tabelaPedidos);
         scrollPedidos.setBorder(BorderFactory.createLineBorder(BORDA));
+
         painelPedidos.add(scrollPedidos);
+
 
         // painel com os dados do pedido selecionado
         JPanel dadosPedido = new JPanel(new GridBagLayout());
@@ -182,18 +186,15 @@ public class TelaRecebimento extends JPanel {
 
         componente(dadosPedido, gp, 0, "ID Pedido:", idPedido);
         componente(dadosPedido, gp, 1, "Fornecedor:", fornecedor);
-        componente(dadosPedido, gp, 2, "Tipo do item:", tipoItem);
-        componente(dadosPedido, gp, 3, "Código:", codigo);
-        componente(dadosPedido, gp, 4, "Item:", item);
-        componente(dadosPedido, gp, 5, "Quantidade solicitada:", quantidadeSolicitada);
+        componente(dadosPedido, gp, 2, "Produto:", produto);
+        componente(dadosPedido, gp, 3, "Quantidade solicitada:", quantidadeSolicitada);
 
         // dados do pedido são apenas para consulta
         idPedido.setEditable(false);
         fornecedor.setEditable(false);
-        tipoItem.setEditable(false);
-        codigo.setEditable(false);
-        item.setEditable(false);
+        produto.setEditable(false);
         quantidadeSolicitada.setEditable(false);
+
 
         // painel com os dados da conferência
         JPanel conferencia = new JPanel(new GridBagLayout());
@@ -212,11 +213,13 @@ public class TelaRecebimento extends JPanel {
         componente(conferencia, gc, 2, "Documento da aquisição:", documentoAquisicao);
         componente(conferencia, gc, 3, "Responsável:", responsavel);
 
-        // campos usados somente quando o item exigir
+
+        // campos usados somente quando o produto exigir
         componente(conferencia, gc, 4, "Lote:", lote);
         componente(conferencia, gc, 5, "Número de série:", numeroSerie);
         componente(conferencia, gc, 6, "Data de fabricação:", dataFabricacao);
         componente(conferencia, gc, 7, "Data de validade:", dataValidade);
+
 
         // painel dos botões de recebimento
         JPanel a = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -231,12 +234,14 @@ public class TelaRecebimento extends JPanel {
         a.add(confirmar);
         a.add(cancelar);
 
+
         // junta conferência e botões
         JPanel areaConferencia = new JPanel(new BorderLayout());
         areaConferencia.setBackground(FUNDO);
 
         areaConferencia.add(conferencia, BorderLayout.CENTER);
         areaConferencia.add(a, BorderLayout.SOUTH);
+
 
         // organiza as áreas principais da tela
         JPanel centro = new JPanel();
@@ -249,6 +254,7 @@ public class TelaRecebimento extends JPanel {
         centro.add(dadosPedido);
         centro.add(areaConferencia);
 
+
         // rolagem caso os componentes não caibam na tela
         JScrollPane scrollTela = new JScrollPane(centro);
         scrollTela.setBorder(null);
@@ -257,6 +263,7 @@ public class TelaRecebimento extends JPanel {
         add(n, BorderLayout.NORTH);
         add(scrollTela, BorderLayout.CENTER);
     }
+
 
     // aplica o mesmo padrão visual aos botões
     private void configurarBotao(JButton botao) {
@@ -267,8 +274,10 @@ public class TelaRecebimento extends JPanel {
         botao.setFocusPainted(false);
     }
 
+
     // método auxiliar que adiciona um label na esquerda do seu campo
     private void componente(JPanel p, GridBagConstraints g, int y, String r, Component t) {
+
         // texto do campo na coluna 0
         g.gridx = 0;
         g.gridy = y;
@@ -277,6 +286,7 @@ public class TelaRecebimento extends JPanel {
 
         JLabel label = new JLabel(r);
         label.setForeground(TEXTO);
+
         p.add(label, g);
 
         // campo correspondente na coluna 1
@@ -285,91 +295,82 @@ public class TelaRecebimento extends JPanel {
         g.fill = GridBagConstraints.HORIZONTAL;
 
         t.setForeground(TEXTO);
+
         p.add(t, g);
     }
 
+
     // permite que o Controller acesse os campos da tela
-    public JTextField getTxtIdPedidoFiltro() { 
-    	return idPedidoFiltro; 
+
+    public JTextField getTxtIdPedidoFiltro() {
+        return idPedidoFiltro;
     }
-    
-    public JComboBox<String> getCmbTipoItemFiltro() { 
-    	return tipoItemFiltro;
+
+    public JTextField getTxtFornecedorFiltro() {
+        return fornecedorFiltro;
     }
-    
-    public JTextField getTxtCodigoFiltro() { 
-    	return codigoFiltro; 
+
+    public JTextField getTxtProdutoFiltro() {
+        return produtoFiltro;
     }
-    
-    public JTextField getTxtFornecedorFiltro() { 
-    	return fornecedorFiltro; 
+
+    public JComboBox<String> getCmbSituacaoFiltro() {
+        return situacaoFiltro;
     }
-    
-    public JComboBox<String> getCmbSituacaoFiltro() { 
-    	return situacaoFiltro; 
+
+    public JTable getTabelaPedidos() {
+        return tabelaPedidos;
     }
-    
-    public JTable getTabelaPedidos() { 
-    	return tabelaPedidos; 
+
+    public JTextField getTxtIdPedido() {
+        return idPedido;
     }
-    
-    public JTextField getTxtIdPedido() { 
-    	return idPedido; 
+
+    public JTextField getTxtFornecedor() {
+        return fornecedor;
     }
-    
-    public JTextField getTxtFornecedor() { 
-    	return fornecedor; 
+
+    public JTextField getTxtProduto() {
+        return produto;
     }
-    
-    public JTextField getTxtTipoItem() { 
-    	return tipoItem; 
+
+    public JTextField getTxtQuantidadeSolicitada() {
+        return quantidadeSolicitada;
     }
-    
-    public JTextField getTxtCodigo() { 
-    	return codigo; 
+
+    public JTextField getTxtQuantidadeRecebida() {
+        return quantidadeRecebida;
     }
-    
-    public JTextField getTxtItem() { 
-    	return item; 
+
+    public JComboBox<String> getCmbLocalDestino() {
+        return localDestino;
     }
-    
-    public JTextField getTxtQuantidadeSolicitada() { 
-    	return quantidadeSolicitada; 
+
+    public JTextField getTxtDocumentoAquisicao() {
+        return documentoAquisicao;
     }
-    
-    public JTextField getTxtQuantidadeRecebida() { 
-    	return quantidadeRecebida; 
+
+    public JTextField getTxtResponsavel() {
+        return responsavel;
     }
-    
-    public JComboBox<String> getCmbLocalDestino() { 
-    	return localDestino; 
+
+    public JTextField getTxtLote() {
+        return lote;
     }
-    
-    public JTextField getTxtDocumentoAquisicao() { 
-    	return documentoAquisicao; 
+
+    public JTextField getTxtNumeroSerie() {
+        return numeroSerie;
     }
-    
-    public JTextField getTxtResponsavel() { 
-    	return responsavel; 
+
+    public JTextField getTxtDataFabricacao() {
+        return dataFabricacao;
     }
-    
-    public JTextField getTxtLote() { 
-    	return lote; 
+
+    public JTextField getTxtDataValidade() {
+        return dataValidade;
     }
-    
-    public JTextField getTxtNumeroSerie() { 
-    	return numeroSerie; 
-    }
-    
-    public JTextField getTxtDataFabricacao() { 
-    	return dataFabricacao; 
-    }
-    
-    public JTextField getTxtDataValidade() { 
-    	return dataValidade; 
-    }
-    
-    public DefaultTableModel getModeloPedidos() { 
-    	return modeloPedidos; 
+
+    public DefaultTableModel getModeloPedidos() {
+        return modeloPedidos;
     }
 }

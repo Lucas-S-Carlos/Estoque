@@ -120,24 +120,4 @@ public class TelaHistorico extends JPanel {
 
 		return scrollPane;
 	}
-
-	public JTextField getTxtProduto() {
-		return txtProduto;
-	}
-
-	public JTextField getTxtDataInicial() {
-		return txtDataInicial;
-	}
-
-	public JTextField getTxtDataFinal() {
-		return txtDataFinal;
-	}
-
-	public JTextField getTxtResponsavel() {
-		return txtResponsavel;
-	}
-
-	public JTextField getTxtDocumento() {
-		return txtDocumento;
-	}
 }

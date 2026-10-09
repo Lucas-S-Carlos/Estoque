@@ -37,7 +37,7 @@ import view.movimentacao.CatalogoItens.TipoItem;
  *     }
  *     CatalogoItens.Item item = seletorItem.getItem();
  */
-public class CatalogoItem extends JPanel {
+public class SeletorItem extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class CatalogoItem extends JPanel {
      * @param permitirKit false para esconder a opção "Kit"
      *                    (ex.: telas em que kit não faz sentido).
      */
-    public CatalogoItem(boolean permitirKit) {
+    public SeletorItem(boolean permitirKit) {
 
         TipoItem[] tipos = permitirKit
             ? TipoItem.values()

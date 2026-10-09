@@ -13,7 +13,7 @@ import view.cadastro.TelaProdutos;
 
 import javax.swing.JOptionPane;
 
-public class Controller_produtos {
+public class Controller_variacoes {
 
     private final TelaProdutos tela;
 /*
@@ -21,7 +21,7 @@ public class Controller_produtos {
     private final ... carroDAO = new ...();
     private final ... dao = new ...();
 */
-    public Controller_produtos(TelaProdutos t) {
+    public Controller_variacoes(TelaProdutos t) {
 
         tela = t;
 
@@ -411,7 +411,6 @@ public class Controller_produtos {
         }
 
     }
-
 
 
 

@@ -13,7 +13,7 @@ import view.cadastro.TelaProdutos;
 
 import javax.swing.JOptionPane;
 
-public class Controller_produtos {
+public class Controller_kits {
 
     private final TelaProdutos tela;
 /*
@@ -21,7 +21,7 @@ public class Controller_produtos {
     private final ... carroDAO = new ...();
     private final ... dao = new ...();
 */
-    public Controller_produtos(TelaProdutos t) {
+    public Controller_kits(TelaProdutos t) {
 
         tela = t;
 
@@ -65,6 +65,7 @@ public class Controller_produtos {
     public void salvar() {
 
         try {
+        	validar();
 
             Model l = new Model();
 
@@ -410,6 +411,18 @@ public class Controller_produtos {
 
         }
 
+    }
+    
+    private void validar() {
+    	
+    	int id = 0;
+    	try {
+            id = Integer.parseInt(tela.getCodigo().getText());
+          } catch (Exception e) {
+            id = 0;
+          }
+   
+    	
     }
 
 

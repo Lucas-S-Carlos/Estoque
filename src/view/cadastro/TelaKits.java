@@ -449,8 +449,12 @@ public class TelaKits extends JPanel {
         tabelaKits.clearSelection();
     }
 
-    public JTextField getCodigo() {
-        return codigo;
+    public int getCodigo() {
+        try {
+            return Integer.parseInt(codigo.getText());
+          } catch (Exception e) {
+            return 0;
+          }
     }
 
     public JTextField getNome() {
