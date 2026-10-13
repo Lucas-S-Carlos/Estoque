@@ -245,6 +245,24 @@ public class Controller_kits {
         }
 
     }
+    private void validarSugestao() {
+
+	    if (
+	      Validador.vazio(tela.getTxtQuantidadeSugerida().getText())
+	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+	    
+	    if (
+	  	      Validador.vazio(tela.getTxtDataPrevista().getText())
+	  	    ) throw new IllegalArgumentException("Informe uma data para a previsão de reposição.");
+	    
+	    if (
+	  	      Validador.vazio(tela.getTxtResponsavel().getText())
+	  	    ) throw new IllegalArgumentException("Informe um responsavel.");
+	    
+	    if (
+		  	      Validador.vazio(tela.getTxtJustificativa().getText())
+		  	    ) throw new IllegalArgumentException("Faça uma justificativa.");
+	}
 
     public void listar() {
 

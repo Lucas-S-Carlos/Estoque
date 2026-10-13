@@ -21,6 +21,9 @@ public class Controller_produtos {
     private final ... carroDAO = new ...();
     private final ... dao = new ...();
 */
+    
+    int id;
+    
     public Controller_produtos(TelaProdutos t) {
 
         tela = t;
@@ -244,6 +247,48 @@ public class Controller_produtos {
         }
 
     }
+    
+    
+    private void validarSugestao() {
+    	if (
+	      Validador.naoNumero(tela.getCodigo().getText())
+	    ) throw new IllegalArgumentException("Informe o ID corretamente.");
+    	
+    	try {
+    	      int id = Integer.parseInt(tela.getCodigo().getText());
+    	    } catch (Exception e) {
+    	      id = 0;
+    	    }
+    	
+	    if (
+	  	      Validador.vazio(tela.getNome().getText()) && tela.getNome().getText().length() > 100
+	  	    ) throw new IllegalArgumentException("Informe o nome corretamente.(Max.: 100 carácteres)");
+	    
+	    if (
+	    	    tela.getCategoria().getSelectedItem() == null
+	    	) throw new IllegalArgumentException("Selecione um tipo.");
+	    
+	    if (
+	    		tela.getDescricao().getText().length() > 255 && tela.getDescricao().getText() != null
+		  	    ) throw new IllegalArgumentException("A descrição deve estar correta. (Max.: 255 carácteres)");
+	    
+	    if (
+	    		tela.getUnidadeMedida().getText().length() > 20 && tela.getUnidadeMedida().getText() != null
+		  	    ) throw new IllegalArgumentException("O unidade de medida deve estar correta. (Max.: 20 carácteres)");
+	    
+	    if (
+	  	      Validador.naoNumero(tela.getQuantidade().getText()) || !Validador.vazio(tela.getQuantidade().getText())
+	  	    ) throw new IllegalArgumentException("Informe a quantidade corretamente.");
+	    
+	    if (
+		  	      Validador.naoDecimal(tela.getPeso().getText()) && !Validador.vazio(tela.getPeso().getText())
+		  	    ) throw new IllegalArgumentException("Informe o Peso corretamente.");
+		    
+	    
+	    
+	    
+	    
+	}
 
     public void listar() {
 

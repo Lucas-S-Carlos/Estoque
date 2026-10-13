@@ -194,27 +194,27 @@ public class TelaProdutos extends JPanel {
     public JTextField getCodigo() {
         return codigo;
     }
-
+//
     public JTextField getNome() {
         return nome;
     }
-
+//
     public JComboBox<String> getCategoria() {
         return categoria;
     }
-
+//
     public JTextField getDescricao() {
         return descricao;
     }
-
+//
     public JTextField getUnidadeMedida() {
         return unidadeMedida;
     }
-
+//
     public JTextField getQuantidade() {
         return quantidade;
     }
-
+//
     public JTextField getPeso() {
         return peso;
     }

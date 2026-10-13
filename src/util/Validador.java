@@ -9,6 +9,12 @@ public final class Validador {
   private static final String FORMATO_DATA = "dd/MM/yyyy";
 
   private Validador() {}
+  public static boolean naoNumero(String valor) {
+	    return (!valor.matches("\\d+"));
+  };
+  public static boolean naoDecimal(String valor) {
+	    return (!valor.matches("-?\\d+([.,]\\d+)?"));
+};
 
   public static boolean vazio(String valor) {
     return valor == null || valor.trim().length() == 0;
