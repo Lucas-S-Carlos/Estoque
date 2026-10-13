@@ -261,34 +261,58 @@ public class Controller_produtos {
     	    }
     	
 	    if (
-	  	      Validador.vazio(tela.getNome().getText()) && tela.getNome().getText().length() > 100
+Validador.vazio(tela.getNome().getText()) || tela.getNome().getText().length() > 100
 	  	    ) throw new IllegalArgumentException("Informe o nome corretamente.(Max.: 100 carácteres)");
 	    
 	    if (
-	    	    tela.getCategoria().getSelectedItem() == null
+tela.getCategoria().getSelectedItem() == null
 	    	) throw new IllegalArgumentException("Selecione um tipo.");
 	    
 	    if (
-	    		tela.getDescricao().getText().length() > 255 && tela.getDescricao().getText() != null
+tela.getDescricao().getText().length() > 255 && 
+tela.getDescricao().getText() != null
 		  	    ) throw new IllegalArgumentException("A descrição deve estar correta. (Max.: 255 carácteres)");
 	    
 	    if (
-	    		tela.getUnidadeMedida().getText().length() > 20 && tela.getUnidadeMedida().getText() != null
+	    		
+tela.getUnidadeMedida().getText().length() > 20 && tela.getUnidadeMedida().getText() != null
 		  	    ) throw new IllegalArgumentException("O unidade de medida deve estar correta. (Max.: 20 carácteres)");
 	    
 	    if (
-	  	      Validador.naoNumero(tela.getQuantidade().getText()) || !Validador.vazio(tela.getQuantidade().getText())
+	  	      Validador.naoNumero(tela.getQuantidade().getText()) || Validador.vazio(tela.getQuantidade().getText())
 	  	    ) throw new IllegalArgumentException("Informe a quantidade corretamente.");
 	    
 	    if (
 		  	      Validador.naoDecimal(tela.getPeso().getText()) && !Validador.vazio(tela.getPeso().getText())
 		  	    ) throw new IllegalArgumentException("Informe o Peso corretamente.");
 		    
+	    if (
+		  	      Validador.naoDecimal(tela.getPreco().getText()) || Validador.vazio(tela.getPreco().getText())
+		  	    ) throw new IllegalArgumentException("Informe o Preço corretamente.");
 	    
-	    
-	    
-	    
+	 if (
+	  	      Validador.naoNumero(tela.getEstoqueMinimo().getText()) || Validador.vazio(tela.getEstoqueMinimo().getText())
+	  	    ) throw new IllegalArgumentException("Informe o estoque mínimo corretamente.");
+    
+    if (
+	  	      Validador.naoNumero(tela.getEstoqueMaximo().getText()) || Validador.vazio(tela.getEstoqueMaximo().getText())
+	  	    ) throw new IllegalArgumentException("Informe o estoque máximo corretamente."); 
+    
+    if (
+    		tela.getStatus().getSelectedItem() == null
+    			    	) throw new IllegalArgumentException("Selecione um tipo.");
+    
+    
+    
+    
+    
+    
+    
+    
 	}
+    
+    
+    
 
     public void listar() {
 
