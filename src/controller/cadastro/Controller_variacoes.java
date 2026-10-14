@@ -9,19 +9,22 @@ import model.Model;
 
 
 import util.Validador;
-import view.cadastro.TelaProdutos;
+import view.cadastro.TelaVariacoes;
 
 import javax.swing.JOptionPane;
 
 public class Controller_variacoes {
 
-    private final TelaProdutos tela;
+    private final TelaVariacoes tela;
 /*
     private final ... clienteDAO = new ...(); 
     private final ... carroDAO = new ...();
     private final ... dao = new ...();
 */
-    public Controller_variacoes(TelaProdutos t) {
+    
+    int id;
+    
+    public Controller_variacoes(TelaVariacoes t) {
 
         tela = t;
 
@@ -244,24 +247,58 @@ public class Controller_variacoes {
         }
 
     }
-    private void validarSugestao() {
-
+    
+    
+    private void validarDados() {
+    	if (
+	      Validador.naoNumero(tela.getProduto().getText())
+	    ) throw new IllegalArgumentException("Informe o ID do produto corretamente.");
+    	
+    	try {
+    		int id = Integer.parseInt(tela.getProduto().getText());
+    	} catch (Exception e) {
+    	    id = 0;
+    	}
+    	
+    	if (
+	    		tela.getSku().getText().length() > 50 || Validador.vazio(tela.getSku().getText())
+		) throw new IllegalArgumentException("O SKU não deve estar vazio. (Max.: 50 carácteres)");
+	    
+    	if (
+	    		tela.getNomeVariacao().getText().length() > 100 || Validador.vazio(tela.getNomeVariacao().getText())
+		) throw new IllegalArgumentException("O nome da váriação deve ser invormado. (Max.: 100 carácteres)");
+	    
+	    //opcional
 	    if (
-	      Validador.vazio(tela.getTxtQuantidadeSugerida().getText())
-	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+	    		tela.getTamanho().getText().length() > 30 && 
+	    		!Validador.vazio(tela.getTamanho().getText())
+		) throw new IllegalArgumentException("O tamanho deve estar correta. (Max.: 30 carácteres)");
+	    
+	    //opconal
+	    if (
+	    		tela.getCor().getText().length() > 30 && 
+	    		!Validador.vazio(tela.getCor().getText())
+		) throw new IllegalArgumentException("A cor deve estar correta. (Max.: 30 carácteres)");
+	    
+	  //opconal
+	    if (
+	    		tela.getModelo().getText().length() > 100 && 
+	    		!Validador.vazio(tela.getModelo().getText())
+		) throw new IllegalArgumentException("O modelo deve ser invomado corretamente. (Max.: 100 carácteres)");
 	    
 	    if (
-	  	      Validador.vazio(tela.getTxtDataPrevista().getText())
-	  	    ) throw new IllegalArgumentException("Informe uma data para a previsão de reposição.");
+		  	      Validador.naoNumero(tela.getQuantidade().getText()) || Validador.vazio(tela.getQuantidade().getText())
+		) throw new IllegalArgumentException("Informe a quantidade corretamente.");
 	    
+	  //opconal
 	    if (
-	  	      Validador.vazio(tela.getTxtResponsavel().getText())
-	  	    ) throw new IllegalArgumentException("Informe um responsavel.");
-	    
-	    if (
-		  	      Validador.vazio(tela.getTxtJustificativa().getText())
-		  	    ) throw new IllegalArgumentException("Faça uma justificativa.");
+	    		Validador.naoDecimal(tela.getPreco().getText()) && !Validador.vazio(tela.getPreco().getText())
+		  	    ) throw new IllegalArgumentException("Informe o preço corretamente.");
+    
 	}
+    
+    
+    
 
     public void listar() {
 
@@ -429,6 +466,7 @@ public class Controller_variacoes {
         }
 
     }
+
 
 
 
