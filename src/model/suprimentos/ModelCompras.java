@@ -1,76 +1,64 @@
 package model.suprimentos;
 
+import java.time.LocalDate;
+
 public class ModelCompras {
-	private int id_soli_compras_supri;
-	private int id_pedido_compras_supri;
-	private String tipo_item_compras_supri;
-	private int cod_compras_supri;
-	private String fornecedor_compras_supri;
-	private String situacao_compras_supri;
+	private int idSolicitacao;
+	private int idSugestao;
+	private int quantidadeAprovada;
+	private LocalDate dataSolicitacao;
+	private String statusSolicitacao;
 	
 	public ModelCompras() {}
 	
-	public ModelCompras(int id_soli_compras_supri,
-						int id_pedido_compras_supri,
-						String tipo_item_compras_supri,
-						int cod_compras_supri,
-						String fornecedor_compras_supri,
-						String situacao_compras_supri) {
+	public ModelCompras(int idSolicitacao, int idSugestao,
+						int quantidadeAprovada, LocalDate dataSolicitacao,
+						String statusSolicitacao) {
 		this();
-		this.setId_soli_compras_supri(id_soli_compras_supri);
-		this.setId_pedido_compras_supri(id_pedido_compras_supri);
-		this.setTipo_item_compras_supri(tipo_item_compras_supri);
-		this.setCod_compras_supri(cod_compras_supri);
-		this.setFornecedor_compras_supri(fornecedor_compras_supri);
-		this.setSituacao_compras_supri(situacao_compras_supri);
-		
+		this.setIdSolicitacao(idSolicitacao);
+		this.setIdSugestao(idSugestao);
+		this.setQuantidadeAprovada(quantidadeAprovada);
+		this.setDataSolicitacao(dataSolicitacao);
+		this.setStatusSolicitacao(statusSolicitacao);
 	}
 
-	public int getId_soli_compras_supri() {
-		return id_soli_compras_supri;
+	public int getIdSolicitacao() {
+		return idSolicitacao;
 	}
 
-	public void setId_soli_compras_supri(int id_soli_compras_supri) {
-		this.id_soli_compras_supri = id_soli_compras_supri;
+	public void setIdSolicitacao(int idSolicitacao) {
+		this.idSolicitacao = idSolicitacao;
 	}
 
-	public int getId_pedido_compras_supri() {
-		return id_pedido_compras_supri;
+	public int getIdSugestao() {
+		return idSugestao;
 	}
 
-	public void setId_pedido_compras_supri(int id_pedido_compras_supri) {
-		this.id_pedido_compras_supri = id_pedido_compras_supri;
+	public void setIdSugestao(int idSugestao) {
+		this.idSugestao = idSugestao;
 	}
 
-	public String getTipo_item_compras_supri() {
-		return tipo_item_compras_supri;
+	public int getQuantidadeAprovada() {
+		return quantidadeAprovada;
 	}
 
-	public void setTipo_item_compras_supri(String tipo_item_compras_supri) {
-		this.tipo_item_compras_supri = tipo_item_compras_supri;
+	public void setQuantidadeAprovada(int quantidadeAprovada) {
+		this.quantidadeAprovada = quantidadeAprovada;
 	}
 
-	public int getCod_compras_supri() {
-		return cod_compras_supri;
+	public LocalDate getDataSolicitacao() {
+		return dataSolicitacao;
 	}
 
-	public void setCod_compras_supri(int cod_compras_supri) {
-		this.cod_compras_supri = cod_compras_supri;
+	public void setDataSolicitacao(LocalDate dataSolicitacao) {
+		this.dataSolicitacao = dataSolicitacao;
 	}
 
-	public String getFornecedor_compras_supri() {
-		return fornecedor_compras_supri;
+	public String getStatusSolicitacao() {
+		return statusSolicitacao;
 	}
 
-	public void setFornecedor_compras_supri(String fornecedor_compras_supri) {
-		this.fornecedor_compras_supri = fornecedor_compras_supri;
-	}
-
-	public String getSituacao_compras_supri() {
-		return situacao_compras_supri;
-	}
-
-	public void setSituacao_compras_supri(String situacao_compras_supri) {
-		this.situacao_compras_supri = situacao_compras_supri;
+	public void setStatusSolicitacao(String statusSolicitacao) {
+		this.statusSolicitacao = statusSolicitacao;
 	}
 }
