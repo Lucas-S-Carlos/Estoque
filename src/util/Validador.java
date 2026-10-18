@@ -12,6 +12,7 @@ public final class Validador {
   public static boolean naoNumero(String valor) {
 	    return (!valor.matches("\\d+"));
   };
+
   public static boolean naoDecimal(String valor) {
 	    return (!valor.matches("-?\\d+([.,]\\d+)?"));
 };

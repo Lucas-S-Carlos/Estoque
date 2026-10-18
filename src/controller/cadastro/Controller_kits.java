@@ -9,19 +9,19 @@ import model.Model;
 
 
 import util.Validador;
-import view.cadastro.TelaProdutos;
+import view.cadastro.TelaKits;
 
 import javax.swing.JOptionPane;
 
 public class Controller_kits {
 
-    private final TelaProdutos tela;
+    private final TelaKits tela;
 /*
     private final ... clienteDAO = new ...(); 
     private final ... carroDAO = new ...();
     private final ... dao = new ...();
 */
-    public Controller_kits(TelaProdutos t) {
+    public Controller_kits(TelaKits t) {
 
         tela = t;
 
@@ -245,23 +245,20 @@ public class Controller_kits {
         }
 
     }
-    private void validarSugestao() {
+    private void validarDados() {
 
 	    if (
-	      Validador.vazio(tela.getTxtQuantidadeSugerida().getText())
-	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+	    		Validador.vazio(tela.getNome().getText()) || tela.getNome().getText().length() > 100
+	  	) throw new IllegalArgumentException("Informe o nome corretamente.(Max.: 100 carácteres)");
 	    
 	    if (
-	  	      Validador.vazio(tela.getTxtDataPrevista().getText())
-	  	    ) throw new IllegalArgumentException("Informe uma data para a previsão de reposição.");
+	    		Validador.naoNumero(tela.getQuantidade().getText()) || Validador.vazio(tela.getQuantidade().getText())
+	  	) throw new IllegalArgumentException("Informe a quantidade corretamente.");
 	    
 	    if (
-	  	      Validador.vazio(tela.getTxtResponsavel().getText())
-	  	    ) throw new IllegalArgumentException("Informe um responsavel.");
-	    
-	    if (
-		  	      Validador.vazio(tela.getTxtJustificativa().getText())
-		  	    ) throw new IllegalArgumentException("Faça uma justificativa.");
+	    		tela.getTipo().getSelectedItem() == null
+	    ) throw new IllegalArgumentException("Selecione um tipo.");
+    
 	}
 
     public void listar() {
