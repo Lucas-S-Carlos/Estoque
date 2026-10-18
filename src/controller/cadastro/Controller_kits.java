@@ -249,15 +249,24 @@ public class Controller_kits {
 
 	    if (
 	    		Validador.vazio(tela.getNome().getText()) || tela.getNome().getText().length() > 100
-	  	) throw new IllegalArgumentException("Informe o nome corretamente.(Max.: 100 carácteres)");
+	  	) throw new IllegalArgumentException("Informe o nome do kit corretamente.(Max.: 100 carácteres)");
 	    
 	    if (
-	    		Validador.naoNumero(tela.getQuantidade().getText()) || Validador.vazio(tela.getQuantidade().getText())
-	  	) throw new IllegalArgumentException("Informe a quantidade corretamente.");
+	    		Validador.naoNumero(tela.getTabelaKits().getText()) || Validador.vazio(tela.getTabelaKits().getText())
+	  	) throw new IllegalArgumentException("Informe a quantidade de kits corretamente.");
 	    
 	    if (
 	    		tela.getTipo().getSelectedItem() == null
 	    ) throw new IllegalArgumentException("Selecione um tipo.");
+	    
+	    if (
+	    		Validador.vazio(tela.getProduto().getText()) || tela.getProduto().getText().length() > 50
+	  	) throw new IllegalArgumentException("Informe o SKU corretamente.(Max.: 50 carácteres)");
+	    
+	    if (
+	    		Validador.naoNumero(tela.getQuantidade().getText()) || Validador.vazio(tela.getQuantidade().getText())
+	  	) throw new IllegalArgumentException("Informe a quantidade de produtos no kit corretamente.");
+
     
 	}
 

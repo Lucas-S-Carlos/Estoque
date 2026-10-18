@@ -476,7 +476,7 @@ public class TelaKits extends JPanel {
     public JTextField getPesquisa() {
         return pesquisa;
     }
-
+////
     public JTextField getProduto() {
         return produto;
     }
