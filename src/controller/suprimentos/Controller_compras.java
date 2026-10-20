@@ -1,4 +1,4 @@
-package controller.mrp;
+package controller.suprimentos;
 
 import view.suprimentos.TelaMRP;
 
@@ -6,11 +6,11 @@ import javax.swing.JOptionPane;
 
 import util.Validador;
 import model.Model;
-public class Controller_mrp {
+public class Controller_compras {
 
 	private final TelaMRP tela;
 	
-	public Controller_mrp(TelaMRP tela) {
+	public Controller_compras(TelaMRP tela) {
         this.tela = tela;
     }
 	
@@ -31,8 +31,16 @@ public class Controller_mrp {
 	private void validarSugestao() {
 
 	    if (
-	      Validador.vazio(tela.getTxtQuantidadeSugerida().getText())
+	      Validador.naoNumero(tela.getTxtQuantidadeSugerida().getText())
 	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+	    if (
+	  	      Validador.naoNumero(tela.getTxtQuantidadeReservada().getText())
+	    	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+	    
+	    if (
+		  	      Validador.naoNumero(tela.getTxtQuantidadeSolicitada().getText())
+		    	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+	    
 	    
 	    if (
 	  	      Validador.vazio(tela.getTxtDataPrevista().getText())
