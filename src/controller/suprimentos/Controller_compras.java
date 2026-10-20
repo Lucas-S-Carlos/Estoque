@@ -6,11 +6,11 @@ import javax.swing.JOptionPane;
 
 import util.Validador;
 import model.Model;
-public class Controller_compras {
+public class Controller_mrp {
 
 	private final TelaMRP tela;
 	
-	public Controller_compras(TelaMRP tela) {
+	public Controller_mrp(TelaMRP tela) {
         this.tela = tela;
     }
 	
@@ -28,7 +28,7 @@ public class Controller_compras {
 	      erro(e);
 	   }
 	}
-	private void validarSugestao() {
+	private void validarSolicitacao() {
 
 	    if (
 	      Validador.naoNumero(tela.getTxtQuantidadeSugerida().getText())
