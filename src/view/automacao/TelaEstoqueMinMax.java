@@ -138,7 +138,6 @@ public class TelaEstoqueMinMax extends JPanel {
         tabela.clearSelection();
     }
 
-    // Getters para integração com Controller e DAO
     public JTextField getCampoProduto() {
         return campoProduto;
     }
