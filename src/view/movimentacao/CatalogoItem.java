@@ -295,4 +295,23 @@ public class CatalogoItem extends JPanel {
     public void focar() {
         campoCodigo.requestFocus();
     }
+    public JComboBox<TipoItem> getcampoTipo() {
+        return campoTipo;
+    }
+
+    public JTextField getcampoCodigo() {
+        return campoCodigo;
+    }
+
+    public JTextField getcampoNome() {
+        return campoNome;
+    }
+
+    public  JButton getbotaoBuscar() {
+        return  botaoBuscar;
+    }
+
+    public Color getcorTextoNormal() {
+        return corTextoNormal;
+    }
 }
