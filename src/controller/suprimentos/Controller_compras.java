@@ -1,16 +1,16 @@
 package controller.suprimentos;
 
-import view.suprimentos.TelaMRP;
+import view.suprimentos.TelaCompras;
 
 import javax.swing.JOptionPane;
 
 import util.Validador;
 import model.Model;
-public class Controller_mrp {
+public class Controller_compras {
 
-	private final TelaMRP tela;
+	private final TelaCompras tela;
 	
-	public Controller_mrp(TelaMRP tela) {
+	public Controller_compras(TelaCompras tela) {
         this.tela = tela;
     }
 	
@@ -22,8 +22,23 @@ public class Controller_mrp {
 	private void validarPesquisa() {
 		try {
 	    if (
-	      Validador.vazio(tela.getTxtProduto().getText())
-	    ) throw new IllegalArgumentException("Informe um produto para a pesquisa.");
+	      Validador.vazio(tela.getTxtIdSolicitacaoFiltro().getText())
+	    ) throw new IllegalArgumentException("Informe uma solicitação para a pesquisa.");
+	    if (
+	  	      Validador.vazio(tela.getTxtIdPedidoFiltro().getText())
+	  	    ) throw new IllegalArgumentException("Informe um pedido para a pesquisa.");
+	    if (
+	  	      Validador.vazio(tela.getTxtProdutoFiltro().getText())
+	  	    ) throw new IllegalArgumentException("Informe um produto para a pesquisa.");
+	    if (
+	  	      Validador.vazio(tela.getTxtFornecedorFiltro().getText())
+	  	    ) throw new IllegalArgumentException("Informe um fornecedor para a pesquisa.");
+	    
+	    
+	    
+	    
+	    
+	    
 	  }catch (Exception e) {
 	      erro(e);
 	   }
@@ -31,28 +46,32 @@ public class Controller_mrp {
 	private void validarSolicitacao() {
 
 	    if (
-	      Validador.naoNumero(tela.getTxtQuantidadeSugerida().getText())
-	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
-	    if (
-	  	      Validador.naoNumero(tela.getTxtQuantidadeReservada().getText())
-	    	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+	      Validador.naoNumero(tela.getTxtIdSolicitacao().getText())
+	    ) throw new IllegalArgumentException("Informe o id da solicitação.");
 	    
 	    if (
-		  	      Validador.naoNumero(tela.getTxtQuantidadeSolicitada().getText())
-		    	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
-	    
-	    
-	    if (
-	  	      Validador.vazio(tela.getTxtDataPrevista().getText())
-	  	    ) throw new IllegalArgumentException("Informe uma data para a previsão de reposição.");
+	  	      Validador.vazio(tela.getTxtProduto().getText())
+	  	    ) throw new IllegalArgumentException("Informe o produto.");
 	    
 	    if (
-	  	      Validador.vazio(tela.getTxtResponsavel().getText())
-	  	    ) throw new IllegalArgumentException("Informe um responsavel.");
+	  	      Validador.naoNumero(tela.getTxtQuantidadeAprovada().getText())
+	    	    ) throw new IllegalArgumentException("Informe uma quantidade aprovada.");
 	    
 	    if (
-		  	      Validador.vazio(tela.getTxtJustificativa().getText())
-		  	    ) throw new IllegalArgumentException("Faça uma justificativa.");
+	    		tela.getCmbFornecedor().getSelectedItem() == "Selecione um fornecedor"
+	    ) throw new IllegalArgumentException("Selecione um fornecedor.");
+	    
+	    if (
+	  	      Validador.naoNumero(tela.getTxtIdPedido().getText())
+	  	    ) throw new IllegalArgumentException("Informe o id do pedido.");
+	    
+	    if (
+	  	      Validador.vazio(tela.getTxtDataPedido().getText())
+	  	    ) throw new IllegalArgumentException("Informe a data do pedido.");
+	    
+	    if (
+		  	      Validador.vazio(tela.getTxtSituacaoPedido().getText())
+		  	    ) throw new IllegalArgumentException("Informe a situação do pedido.");
 	}
 	
 	

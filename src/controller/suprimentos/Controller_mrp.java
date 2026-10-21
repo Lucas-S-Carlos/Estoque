@@ -35,11 +35,11 @@ public class Controller_mrp {
 	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
 	    if (
 	  	      Validador.naoNumero(tela.getTxtQuantidadeReservada().getText())
-	    	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+	    	    ) throw new IllegalArgumentException("Informe uma quantidade reservada.");
 	    
 	    if (
 		  	      Validador.naoNumero(tela.getTxtQuantidadeSolicitada().getText())
-		    	    ) throw new IllegalArgumentException("Informe uma quantidade sugerida.");
+		    	    ) throw new IllegalArgumentException("Informe uma quantidade solicitada.");
 	    
 	    
 	    if (
@@ -47,8 +47,8 @@ public class Controller_mrp {
 	  	    ) throw new IllegalArgumentException("Informe uma data para a previsão de reposição.");
 	    
 	    if (
-	  	      Validador.vazio(tela.getTxtResponsavel().getText())
-	  	    ) throw new IllegalArgumentException("Informe um responsavel.");
+	  	      Validador.naoNumero(tela.getTxtResponsavel().getText())
+	  	    ) throw new IllegalArgumentException("Informe o id do responsavel.");
 	    
 	    if (
 		  	      Validador.vazio(tela.getTxtJustificativa().getText())
