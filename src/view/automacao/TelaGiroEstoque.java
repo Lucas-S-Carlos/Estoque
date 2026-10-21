@@ -111,7 +111,7 @@ public class TelaGiroEstoque extends JPanel {
         tabelaGiro.clearSelection();
     }
 
-    // Getters para integração com Controller e DAO
+  
     public JTextField getCampoNome() {
         return campoNome;
     }
