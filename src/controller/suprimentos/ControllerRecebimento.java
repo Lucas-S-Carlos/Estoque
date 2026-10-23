@@ -14,11 +14,7 @@ public class ControllerRecebimento {
         this.tela = tela;
     }
 	
-	public void novo() {
 
-        tela.limpar();
-
-    }
 	private void validarPesquisa() {
 		try {
 	    if (

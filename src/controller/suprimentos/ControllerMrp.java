@@ -14,11 +14,7 @@ public class ControllerMrp {
         this.tela = tela;
     }
 	
-	public void novo() {
 
-        tela.limpar();
-
-    }
 	private void validarPesquisa() {
 		try {
 	    if (
