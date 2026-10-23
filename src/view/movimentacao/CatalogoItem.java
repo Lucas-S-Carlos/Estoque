@@ -37,7 +37,7 @@ import view.movimentacao.CatalogoItens.TipoItem;
  *     }
  *     CatalogoItens.Item item = seletorItem.getItem();
  */
-public class SeletorItem extends JPanel {
+public class CatalogoItem extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
