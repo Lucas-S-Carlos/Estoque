@@ -1,6 +1,6 @@
 package controller.automacao;
 
-public class Controller_TelaAlertaReposição {
+public class ControllerAlertaReposição {
 
 	public static void main(String[] args) {
 		

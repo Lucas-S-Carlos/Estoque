@@ -6,11 +6,11 @@ import javax.swing.JOptionPane;
 
 import util.Validador;
 import model.Model;
-public class Controller_compras {
+public class ControllerCompras {
 
 	private final TelaCompras tela;
 	
-	public Controller_compras(TelaCompras tela) {
+	public ControllerCompras(TelaCompras tela) {
         this.tela = tela;
     }
 	

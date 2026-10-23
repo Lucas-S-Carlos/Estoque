@@ -6,11 +6,11 @@ import javax.swing.JOptionPane;
 
 import util.Validador;
 import model.Model;
-public class Controller_mrp {
+public class ControllerMrp {
 
 	private final TelaMRP tela;
 	
-	public Controller_mrp(TelaMRP tela) {
+	public ControllerMrp(TelaMRP tela) {
         this.tela = tela;
     }
 	

@@ -6,11 +6,11 @@ import javax.swing.JOptionPane;
 
 import util.Validador;
 import model.Model;
-public class Controller_recebimento {
+public class ControllerRecebimento {
 
 	private final TelaRecebimento tela;
 	
-	public Controller_recebimento(TelaRecebimento tela) {
+	public ControllerRecebimento(TelaRecebimento tela) {
         this.tela = tela;
     }
 	
