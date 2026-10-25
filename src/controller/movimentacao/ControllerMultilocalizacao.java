@@ -13,14 +13,14 @@ import view.cadastro.TelaVariacoes;
 
 import javax.swing.JOptionPane;
 
-public class ControllerVariacoes {
+public class ControllerMultilocalizacao {
 
     private final TelaVariacoes tela;
 
     
     int id;
     
-    public ControllerVariacoes(TelaVariacoes t) {
+    public ControllerMultilocalizacao(TelaVariacoes t) {
 
         tela = t;
 

@@ -13,11 +13,11 @@ import view.cadastro.TelaKits;
 
 import javax.swing.JOptionPane;
 
-public class ControllerKits {
+public class ControllerEntraSaida {
 
     private final TelaKits tela;
 
-    public ControllerKits(TelaKits t) {
+    public ControllerEntraSaida(TelaKits t) {
 
         tela = t;
 

@@ -13,13 +13,13 @@ import view.cadastro.TelaProdutos;
 
 import javax.swing.JOptionPane;
 
-public class ControllerProdutos {
+public class ControllerLoteSerie {
 
     private final TelaProdutos tela;
  
     int id;
     
-    public ControllerProdutos(TelaProdutos t) {
+    public ControllerLoteSerie(TelaProdutos t) {
 
         tela = t;
 
